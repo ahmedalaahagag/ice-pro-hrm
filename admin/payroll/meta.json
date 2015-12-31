@@ -1,0 +1,10 @@
+{
+"label":"View Payslip",
+"menu":"Payslips",
+"order":"6",
+"icon":"fa-cogs",
+"user_levels":["Admin"],
+"permissions":
+	{
+	}
+}

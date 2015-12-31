@@ -1,0 +1,29 @@
+{
+"label":"Travel",
+"menu":"Personal Information",
+"order":"7",
+"icon":"fa-plane",
+"user_levels":["Admin","Manager","Employee"],
+
+"permissions":
+	{
+		"Manager":{
+			"Add Immigrations":"Yes",
+			"Edit Immigrations":"Yes",
+			"Delete Immigrations":"Yes",
+			"Add Travel History":"Yes",
+			"Edit Travel History":"Yes",
+			"Delete Travel History":"Yes"
+		},
+		
+		"Employee":{
+			"Add Immigrations":"Yes",
+			"Edit Immigrations":"Yes",
+			"Delete Immigrations":"No",
+			"Add Travel History":"Yes",
+			"Edit Travel History":"Yes",
+			"Delete Travel History":"No"
+		}
+	}
+	
+}

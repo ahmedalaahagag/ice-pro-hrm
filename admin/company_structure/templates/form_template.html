@@ -1,0 +1,39 @@
+<form class="form-horizontal" id="_id_" method="post" xmlns="http://www.w3.org/1999/html">
+	<div class="control-group">
+		<div class="controls">
+		  	<span class="label label-warning" id="_id__error" style="display:none;"></span>
+		</div>
+	</div>
+	_fields_
+	<div class="control-group">
+    	<div class="controls">
+      		<button onclick="try{modJs.save()}catch(e){};return false;" class="btn">Save</button>.
+			<button onclick="modJs.cancel();return false;" class="btn">Cancel</button>
+    	</div>
+  	</div>
+</form>
+<script type="text/javascript">
+	$("#node_type").change(function(){
+		if($("#node_type option:selected").text()=='JobTitle'){
+			$("#s2id_title_select").show();
+			$("label:contains('Job Title')").show();
+			$("#field_type").hide();
+			$("#field_title").hide();
+			$("#field_description").hide();
+			$("#field_country").hide();
+		}
+		else {
+			$("#field_type").show();
+			$("#field_title").show();
+			$("#field_description").show();
+			$("#field_country").show();
+			$("#s2id_title_select").hide();
+			$("label:contains('Job Title')").hide();
+
+		}
+	});
+	$("select[name='title_select']").on('change',function(){
+		var newvalue = $("select[name='title_select'] option:selected").text().toString();
+		$("input[name='title']").attr('value', newvalue);
+	});
+</script>

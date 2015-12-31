@@ -1,0 +1,63 @@
+<form class="form-horizontal" id="_id_" method="post" xmlns="http://www.w3.org/1999/html">
+	<div class="control-group">
+		<div class="controls">
+		  	<span class="label label-warning" id="_id__error" style="display:none;"></span>
+		</div>
+	</div>
+	_fields_
+	<div class="control-group">
+    	<div class="controls">
+      		<button onclick="try{modJs.save()}catch(e){};return false;" class="btn">Save</button>
+			<button onclick="modJs.cancel();return false;" class="btn">Cancel</button>
+    	</div>
+  	</div>
+</form>
+<script type="text/javascript">
+	$('#country').change(function(){
+		modJs.changeGovernorate($(this));
+	 });
+	$( document ).ready(function() {
+		/*var institute = $('#field_employee_institution').last();
+
+		 if(institute){
+		 institute.after("<button id='add_education' onclick='modJs.addEducation($(this));return false;' class='btn btn-success pull-right'>+ Add Education</button>");
+		 }*/
+		// Adding Form Grouping
+		var basic = $('#field_name');
+		if(basic)
+		{
+			basic.before("<legend>Basic Information</legend>");
+		}
+		var financial = $('#field_budget');
+		if(financial)
+		{
+			financial.before("<legend>Financial Information</legend>");
+		}
+		var governate = $('#field_governate').first();
+		if(governate)
+		{
+			governate.before("<legend>GEO Information</legend>");
+		}
+		var time = $('#field_start_year');
+		if(time)
+		{
+			time.before("<br><legend>Time Information</legend>");
+		}
+		var parties = $('#field_designer');
+		if(parties)
+		{
+			parties.before("<br><legend>Third Parties Information</legend>");
+		}
+		var service = $('#field_service_category');
+		if(service)
+		{
+			service.before("<br><legend>Category Information</legend>");
+		}
+		var status = $('#field_status');
+		if(status)
+		{
+			status.before("<br><legend>Status Information</legend>");
+		}
+
+	});
+</script>

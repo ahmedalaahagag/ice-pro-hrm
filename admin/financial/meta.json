@@ -1,0 +1,10 @@
+{
+	"label":"Financial",
+	"menu":"Financial",
+	"order":"100",
+	"icon":"fa-eur",
+	"user_levels":["Admin"],
+	"permissions":
+	{
+	}
+}

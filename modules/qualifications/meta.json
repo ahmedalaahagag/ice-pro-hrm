@@ -1,0 +1,10 @@
+{
+"label":"Qualifications",
+"menu":"Personal Information",
+"order":"",
+"icon":"fa-graduation-cap",
+"user_levels":["Admin","Manager","Employee"],
+"permissions":
+	{
+	}
+}

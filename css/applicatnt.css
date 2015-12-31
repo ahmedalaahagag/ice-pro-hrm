@@ -1,0 +1,83 @@
+.form-required{
+ color:#BB1114;	
+}
+.page-content-wrapper .page-content {
+    margin-left: 235px;
+       margin-top: 0px;
+    min-height: 600px;
+    padding: 25px 20px 10px 20px;
+    border: 1px solid #e1e1e1;
+    width: 60%;
+}
+.page-content-wrapper {
+    float: left;
+    width: 100%;
+    margin-top: 40px;
+}
+.col-sm-9 {
+    width: 100%;
+}
+.page-header, .page-sidebar-wrapper, .page-content-wrapper {
+    transition: margin 0.3s;
+	text-transform: uppercase;
+	padding-bottom:20px;
+	font-weight: 600;
+    /* color: #75ad42; */
+}
+.page-header{
+	color: #75ad42;
+}
+.field-group-div h3 span {
+	color: #75ad42;
+	font-weight: 600;
+	font-size: 20px;
+	border-top-width: medium;
+	 	
+}
+.form-type-textfield input{
+ border: 1px solid #75ad42;	
+}
+.form-type-select select{
+ border: 1px solid #75ad42;	
+}
+
+.table-striped>tbody>tr:nth-of-type(odd){background-color:#ffffff ;
+}
+
+
+.form-item .clearfix button {
+	background-color: #81CD3B;
+}
+.form-item .clearfix  {
+	  border-bottom: 2px solid #75ad42;	
+	  padding-bottom:15px;
+}
+.form-actions .form-wrapper .form-group button{
+	background-color: #81CD3B;
+}
+div #edit-actions #edit-submit {
+	background-color: #81CD3B;
+}
+form .field-multiple-table td.field-multiple-drag {
+    width: 30px;
+    padding-right: 0;
+    display: none;
+}
+thead tr .field-label {
+	color: #75ad42;
+	font-weight: 600;
+	font-size: 20px;
+	display:none;
+	
+}
+.table>thead>tr>th {
+    vertical-align: bottom;
+    /* border-bottom: 2px solid #ddd; */
+    display: none;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 8px;
+    line-height: 1.42857143;
+    /* vertical-align: top; */
+    /* border-top: 1px solid #ddd; */
+}

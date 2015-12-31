@@ -1,0 +1,58 @@
+<form class="form-horizontal" id="_id_" role="form">
+	<div class="box-body">
+		<div class="control-group">
+			<div class="controls">
+				<span class="label label-warning" id="_id__error" style="display:none;"></span>
+			</div>
+		</div>
+		_fields_
+		<div class="control-group row">
+			<div class="controls col-sm-9">
+				<button class="saveBtn btn btn-primary pull-right"><i class="fa fa-save"></i> Save</button>
+				<button class="cancelBtn btn pull-right" style="margin-right:5px;"><i class="fa fa-times-circle-o"></i> Cancel</button>
+			</div>
+			<div class="controls col-sm-3">
+			</div>
+		</div>
+	</div>
+</form>
+<script type="text/javascript">
+	$( document ).ready(function() {
+		/*var institute = $('#field_employee_institution').last();
+
+		if(institute){
+			institute.after("<button id='add_education' onclick='modJs.addEducation($(this));return false;' class='btn btn-success pull-right'>+ Add Education</button>");
+		}*/
+		// Adding Form Grouping
+		var personalGroup = $('#field_first_name');
+		if(personalGroup)
+		{
+			personalGroup.before("<legend>Personal Information</legend>");
+		}
+		var educationGroup = $('#field_employee_education').first();
+		if(educationGroup)
+		{
+			educationGroup.before("<legend>Educational Information</legend>");
+		}
+		var jobGroup = $('#field_bank_account');
+		if(jobGroup)
+		{
+			jobGroup.before("<br><legend>Job Information</legend>");
+		}
+
+	});
+	$('#country').change(function(){
+		modJs.changeProvince($(this));
+	 });
+	$('#pay_grade').on('change',function() {
+		var jobtitle = $("#job_title").val();
+		var grade = $("#pay_grade").val();
+		modJs.getSalaryByGrade(jobtitle,grade);
+	});
+	$('#job_title').on('change',function() {
+		var jobtitle = $("#job_title").val();
+		var grade = $("#pay_grade").val();
+		modJs.getSalaryByGrade(jobtitle,grade);
+	});
+
+</script>

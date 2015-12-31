@@ -1,0 +1,21 @@
+{
+"label":"My Documents",
+"menu":"Documents",
+"order":"1",
+"icon":"fa-files-o",
+"user_levels":["Admin","Manager","Employee"],
+
+"permissions":
+	{
+		"Manager":{
+			"Add Documents":"Yes",
+			"Edit Documents":"Yes",
+			"Delete Documents":"Yes"
+		},
+		"Employee":{
+			"Add Documents":"No",
+			"Edit Documents":"No",
+			"Delete Documents":"No"
+		}
+	}
+}
