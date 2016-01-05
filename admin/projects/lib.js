@@ -101,7 +101,9 @@ ProjectAdapter.method('getFormFields', function() {
 		        [ "id", {"label":"ID","type":"hidden"}],
 		        [ "name", {"label":"Project Name","type":"text"}],
 		        [ "media_name", {"label":"Media Name","type":"text","validation":""}],
-				[ "client", {"label":"Client","type":"select2","remote-source":["Clients","id","name"]}],
+				[ "client", {"label":"Client","type":"text","remote-source":["Clients","id","name"]}],
+				[ "client_rep", {"label":"Client Representative","type":"text"}],
+				[ "client_rep_phone", {"label":"Client Representative Phone","type":"text"}],
 				[ "pm", {"label":"Project Manager","type":"select2","remote-source":["Employees","id","first_name+last_name"]}],
 				[ "tba", {"label":"TBA","type":"text","validation":"number"}],
 
@@ -111,6 +113,8 @@ ProjectAdapter.method('getFormFields', function() {
 				[ "governate", {"label":"Governate","type":"select2","remote-source":["Governoraties","id","name"]}],
 			    [ "zone", {"label":"Zone","type":"text","validation":""}],
 				[ "area", {"label":"Area","type":"text","validation":""}],
+				["latitude" , {"label":"Latitude","type":"text","validation":""}],
+				["longitude" , {"label":"Longitude","type":"text","validation":""}],
 
 				["start_year" , {"label":"Start Year","type":"text","validation":"none"}],
 				["start_date" , {"label":"Start Date","type":"date","validation":"none"}],
@@ -126,10 +130,11 @@ ProjectAdapter.method('getFormFields', function() {
 				["service_category" , {"label":"Services category","type":"text","validation":""}],
 				["service_subcategory" , {"label":"Services subcategory","type":"text","validation":""}],
 				["project_category" , {"label":"Project category","type":"select2","source":[["Residential","Residential"],["Commercial","Commercial"]]}],
-				["project_subcategory" , {"label":"Project subcategory","type":"select2","source":[["Apartments","Apartments"],["Duplexes","Duplexes"],["Villas","Villas"],["Palaces","Palaces"],["Offices","Offices"],["Banking","Banking"],["Retail","Retail-F&B "],["Industrial","Industrial-Urban Planning"],["Retail","Retail-F&B "],["Hospitality","Hospitality"]]}],
+				["project_subcategory" , {"label":"Project subcategory","type":"select2","source":[["","Please select project category"]]}],
 
 				[ "phase", {"label":"Phase","type":"select","source":[["Post","Post Contract"],["Pre","Pre Contract"]]}],
-				[ "status", {"label":"Status","type":"select","source":[["Finished","Finished"],["NotDelivered","Finished / Not Delivered"],["OnGoing","On Going"],["Cancelled","Cancelled"]]}],
+
+
 		];
 	}else{
 		return [
@@ -137,7 +142,6 @@ ProjectAdapter.method('getFormFields', function() {
 		        [ "name", {"label":"Name","type":"placeholder"}],
 		        [ "client", {"label":"Client","type":"placeholder","allow-null":true,"remote-source":["Client","id","name"]}],
 		        [ "details",  {"label":"Details","type":"placeholder","validation":"none"}],
-		        [ "status", {"label":"Status","type":"placeholder","source":[["Active","Active"],["Inactive","Inactive"]]}]
 		];
 	}
 	
@@ -166,8 +170,62 @@ ProjectAdapter.method('changeGovernorate', function(country) {
 ProjectAdapter.method('getHelpLink', function () {
 	return 'http://blog.icehrm.com/?page_id=85';
 });
+ProjectAdapter.method('postRenderForm',function(){
+	$("#project_category").on('change',modJs.getSubServiceCategory());
+	$("#field_longitude").after('<div id="map"></div><style>#map {width: 500px;height: 400px;background-color: #CCC;margin-left: 286px}</style>');
+	this.initMap();
+
+});
+ProjectAdapter.method('initMap',function(){
+$.getScript('https://maps.googleapis.com/maps/api/js', function(){
+	var  marker;
+	var mapCanvas = document.getElementById('map');
+	var mapOptions = {
+		center: new google.maps.LatLng(30.0304306,31.2243741),
+		zoom: 13,
+		disableDoubleClickZoom: true,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	}
+	var map = new google.maps.Map(mapCanvas,mapOptions);
+
+	if($("#latitude").val()>1) {
+		var location =new google.maps.LatLng($("#latitude").val(),$("#longitude").val());
+		placeMarker(location);
+	}
+	google.maps.event.addListener(map, 'click', function(event) {
+		placeMarker(event.latLng);
+	})
+	function placeMarker(location) {
+		if (!marker) {
+			// Create the marker if it doesn't exist
+			marker = new google.maps.Marker({
+				position: location,
+				map: map
+			});
+		}
+		// Otherwise, simply update its location on the map.
+		else {
+			marker.setPosition(location);
+		  }
+
+		$("#latitude").val(location.lat());
+		$("#longitude").val(location.lng());
+		map.setCenter(location);
+	}
+})
+});
+
+ProjectAdapter.method('placeMarker',function(location){
+
+});
 
 
+ProjectAdapter.method('getSubServiceCategory',function(){
+	var servicecat = $("#project_category").val();
+	$.post(this.moduleRelativeURL, {'a': 'ca', 'req': servicecat , 'mod': 'admin_projects', 'sa': 'getSubServiceCategory'}, function (data) {
+	 $("#project_subcategory").html(data);
+	})
+});
 /*
  * EmployeeProjectAdapter
  */

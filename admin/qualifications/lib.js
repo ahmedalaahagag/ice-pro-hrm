@@ -209,8 +209,7 @@ DutiesAdapter.method('getFormFields', function() {
 		[ "id", {"label":"ID","type":"hidden"}],
 		[ "name", {"label":"Name","type":"text"}],
 		[ "type", {"label":"Type","type":"select","source":[["1","General Duties"],["2","Strategic Duties"],["3","Technical Duties"]]}],
-		[ "description", {"label":"Description","type":"text","source":[["1","General Duties"],["2","Strategic Duties"],["3","Technical Duties"]]}],
-
+		[ "description", {"label":"Description","type":"textarea",validation:"none"}]
 	];
 });
 

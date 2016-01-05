@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
 This file is part of iCE Hrm.
 
@@ -22,59 +22,75 @@ Developer: Ahmed Alaa Hagag (thilina.hasantha[at]gmail.com / facebook.com/thilin
  */
 
 $moduleName = 'jobs';
-define('MODULE_PATH',dirname(__FILE__));
-include APP_BASE_PATH.'header.php';
-include APP_BASE_PATH.'modulejslibs.inc.php';
-?><div class="span9">
-	<ul class="nav nav-tabs" id="modTab" style="margin-bottom:0px;margin-left:5px;border-bottom: none;">
-		<li id="Grade"  class="active"><a id="tabPayGrades" href="#tabPagePayGrades" onclick="location.reload();">Grades</a></li>
-		<li><a id="tabEmploymentStatus" href="#tabPageEmploymentStatus">Employment Status</a></li>
-		<li style="display: none;" id="JobTitle"><a id="tabJobTitles" href="#tabPageJobTitles">Job Details</a></li>
-		<li style="display: none;"><a id="tabGradeBenefits" href="#tabPageGradeBenefits">Benefits</a></li>
-	</ul>
-	<div class="tab-content">
-			<div class="tab-pane active" id="tabPayGrades">
-				<div id="PayGrades" class="reviewBlock" data-content="List" style="padding-left:5px;">
-				</div>
-				<div id="PayGradesForm" class="reviewBlock" data-content="Form" style="padding-left:5px;display:none;">
+define('MODULE_PATH', dirname(__FILE__));
+include APP_BASE_PATH . 'header.php';
+include APP_BASE_PATH . 'modulejslibs.inc.php';
+?>
+<div class="span9">
+    <ul class="nav nav-tabs" id="modTab" style="margin-bottom:0px;margin-left:5px;border-bottom: none;">
+        <li id="Grade" class="active"><a id="tabPayGrades" href="#tabPagePayGrades" onclick="location.reload();">Grades</a></li>
+        <li id="JobTitlesNamesTab"><a id="tabJobTitlesNames" href="#tabPageJobTitlesNames" onclick="loadTab();">Job Title</a></li>
+        <li><a id="tabEmploymentStatus" href="#tabPageEmploymentStatus">Employment Status</a></li>
+        <li style="display: none;" id="JobTitle"><a id="tabJobTitles" href="#tabPageJobTitles">Job Details</a></li>
+        <li style="display: none;"><a id="tabGradeBenefits" href="#tabPageGradeBenefits">Benefits</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tabPayGrades">
+            <div id="PayGrades" class="reviewBlock" data-content="List" style="padding-left:5px;">
 
-				</div>
-			</div>
-		    <div class="tab-pane" id="tabPageEmploymentStatus">
-			<div id="EmploymentStatus" class="reviewBlock" data-content="List" style="padding-left:5px;">
-		
-			</div>
-			<div id="EmploymentStatusForm" class="reviewBlock" data-content="Form" style="padding-left:5px;display:none;">
-		
-			</div>
-		</div>
+            </div>
+            <div id="PayGradesForm" class="reviewBlock" data-content="Form" style="padding-left:5px;display:none;">
 
-	<div class="tab-pane" id="tabPageJobTitles">
-		<div id="JobTitles" class="reviewBlock" data-content="List" style="padding-left:5px;">
+            </div>
+        </div>
+        <div class="tab-pane" id="tabJobTitlesNames">
+            <div id="JobTitlesNames" class="reviewBlock" data-content="List" style="padding-left:5px;">
 
-		</div>
-		<div id="JobTitlesForm" class="reviewBlock" data-content="Form" style="padding-left:5px;display:none;">
+            </div>
+            <div id="JobTitlesNamesForm" class="reviewBlock" data-content="Form" style="padding-left:5px;display:none;">
 
-		</div>
-	</div>
-		<div class="tab-pane" id="tabPageGradeBenefits">
-			<div id="GradeBenefits" class="reviewBlock" data-content="List" style="padding-left:5px;">
+            </div>
+        </div>
+        <div class="tab-pane" id="tabPageEmploymentStatus">
+            <div id="EmploymentStatus" class="reviewBlock" data-content="List" style="padding-left:5px;">
 
-			</div>
-			<div id="GradeBenefitsForm" class="reviewBlock" data-content="Form" style="padding-left:5px;display:none;">
+            </div>
+            <div id="EmploymentStatusForm" class="reviewBlock" data-content="Form"
+                 style="padding-left:5px;display:none;">
 
-			</div>
-		</div>
-</div>
+            </div>
+        </div>
+        <div class="tab-pane" id="tabPageJobTitles">
+            <div id="JobTitles" class="reviewBlock" data-content="List" style="padding-left:5px;">
+
+            </div>
+            <div id="JobTitlesForm" class="reviewBlock" data-content="Form" style="padding-left:5px;display:none;">
+
+            </div>
+        </div>
+        <div class="tab-pane" id="tabPageGradeBenefits">
+            <div id="GradeBenefits" class="reviewBlock" data-content="List" style="padding-left:5px;">
+
+            </div>
+            <div id="GradeBenefitsForm" class="reviewBlock" data-content="Form" style="padding-left:5px;display:none;">
+
+            </div>
+        </div>
+    </div>
 </div>
 <script>
 
-var modJsList = new Array();
-modJsList['tabPayGrades'] = new PayGradeAdapter('PayGrades');
-modJsList['tabJobTitles'] = new JobTitleAdapter('JobTitles');
-modJsList['tabGradeBenefits'] = new GradeBenefitsAdapter('GradeBenefits');
-modJsList['tabEmploymentStatus'] = new EmploymentStatusAdapter('EmploymentStatus');
-var modJs = modJsList['tabPayGrades'];
-
+    var modJsList = new Array();
+    modJsList['tabPayGrades'] = new PayGradeAdapter('PayGrades');
+    modJsList['tabJobTitlesNames'] = new JobTitlesNamesAdapter('JobTitlesNames');
+    modJsList['tabJobTitles'] = new JobTitleAdapter('JobTitles');
+    modJsList['tabGradeBenefits'] = new GradeBenefitsAdapter('GradeBenefits');
+    modJsList['tabEmploymentStatus'] = new EmploymentStatusAdapter('EmploymentStatus');
+    var modJs = modJsList['tabPayGrades'];
+    function loadTab(){
+       $("#tabPayGrades.tab-pane").removeClass('active');
+       $("#tabJobTitlesNames.tab-pane").addClass('active');
+       $("#JobTitlesNamesTab").addClass('active');
+    }
 </script>
-<?php include APP_BASE_PATH.'footer.php';?>      
+<?php include APP_BASE_PATH . 'footer.php'; ?>

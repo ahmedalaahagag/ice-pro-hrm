@@ -28,7 +28,7 @@ class LoansActionManager extends SubActionManager{
 	const NOTWORKINGDAY = 2;
 	
 	public function addLoan($req){
-		
+
 		//Adding Employee Leave
 		$employeeLoan = new EmployeeExceptionalLoans();
 		$employeeLoan->employee = $req->employee;
@@ -43,7 +43,7 @@ class LoansActionManager extends SubActionManager{
 		
 		if(!$ok){
 			LogManager::getInstance()->info($employeeLoan->ErrorMsg());
-			return new IceResponse(IceResponse::ERROR,"Error occured while applying leave.");	
+			return new IceResponse(IceResponse::ERROR,"Error occured while applying Loan.");
 		}
 		
 
@@ -773,6 +773,20 @@ class LoansActionManager extends SubActionManager{
 		}
 
 		return $sup;
+	}
+
+	private function hasAllRequiredDoucments(){
+		$userID = $this->getCurrentProfileId();
+		$allRequiredDoucments = new Document();
+		$allRequiredDoucments = $allRequiredDoucments->Find('required = ?',array('Yes'));
+		foreach($allRequiredDoucments as $requiredDoucment){
+			$employeeDocument = new EmployeeDocument();
+			$hasDoucment = $employeeDocument->count('employee = ? AND document=? AND status = "Active"',array($userID,$requiredDoucment->id));
+			if($hasDoucment==0){
+				return false;
+			}
+		}
+		return true;
 	}
 
 }

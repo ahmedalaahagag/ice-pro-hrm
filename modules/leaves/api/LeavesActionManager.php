@@ -28,7 +28,11 @@ class LeavesActionManager extends SubActionManager{
 	const NOTWORKINGDAY = 2;
 	
 	public function addLeave($req){
-		
+
+		if($this->hasAllRequiredDoucments()==false){
+			return new IceResponse(IceResponse::ERROR,"You are missing some required documents you can't apply for leaves");
+		}
+
 		$leaveTypeTemp = new LeaveType();
 		$allowedLeaveTypes = $leaveTypeTemp->getUserLeaveTypes();
 		$allowed = false;
@@ -123,9 +127,8 @@ class LeavesActionManager extends SubActionManager{
 			$leavesEmailSender->sendLeaveApplicationSubmittedEmail($employee);
 		}
 		
-		$this->baseService->audit(IceConstants::AUDIT_ACTION, "Leave applied \ start:".$employeeLeave->date_start."\ end:".$employeeLeave->date_end);
+		//$this->baseService->audit(IceConstants::AUDIT_ACTION, "Leave applied \ start:".$employeeLeave->date_start."\ end:".$employeeLeave->date_end);
 		$notificationMsg = $employee->first_name." ".$employee->last_name." applied for a leave. Visit leave module to approve or reject";
-		
 		$this->baseService->notificationManager->addNotification($employee->supervisor,$notificationMsg,'{"type":"url","url":"g=modules&n=leaves&m=module_Leaves#tabSubEmployeeLeaveAll"}',IceConstants::NOTIFICATION_LEAVE);
 		return new IceResponse(IceResponse::SUCCESS,$employeeLeave);
 	}
@@ -861,6 +864,20 @@ class LeavesActionManager extends SubActionManager{
 		$this->baseService->notificationManager->addNotification($employeeLeave->employee,$notificationMsg,'{"type":"url","url":"g=modules&n=leaves&m=module_Leaves#tabEmployeeLeaveApproved"}',IceConstants::NOTIFICATION_LEAVE);
 		
 		return new IceResponse(IceResponse::SUCCESS,"");
+	}
+
+	private function hasAllRequiredDoucments(){
+		$userID = $this->getCurrentProfileId();
+		$allRequiredDoucments = new Document();
+		$allRequiredDoucments = $allRequiredDoucments->Find('required = ?',array('Yes'));
+		foreach($allRequiredDoucments as $requiredDoucment){
+			$employeeDocument = new EmployeeDocument();
+			$hasDoucment = $employeeDocument->count('employee = ? AND document=? AND status = "Active"',array($userID,$requiredDoucment->id));
+			if($hasDoucment==0){
+				return false;
+			}
+		}
+		return true;
 	}
 
 }

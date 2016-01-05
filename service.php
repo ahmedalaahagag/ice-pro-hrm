@@ -106,7 +106,9 @@ if($action == 'get'){
 			include ($emailSenderFile);	
 		}
 		$cls = $moduleCapsName."ActionManager";
+
 		$apiClass = new $cls();
+
 		$apiClass->setUser($user);
 		$apiClass->setBaseService($baseService);
 		$apiClass->setEmailSender($baseService->getEmailSender());

@@ -54,5 +54,8 @@
 		var grade = $("#pay_grade").val();
 		modJs.getSalaryByGrade(jobtitle,grade);
 	});
+	$("#bank").on('change',function() {
+		modJs.getBankBaranches()
+	});
 
 </script>

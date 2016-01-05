@@ -193,6 +193,8 @@ EmployeeAdapter.method('getFormFields', function() {
 			[ "driving_license", {"label":"Driving License No","type":"text","validation":"none","name":"dl"}],
 			[ "driving_license_exp_date", {"label":"License Exp Date","type":"date","validation":"none"}],
 			[ "bank_account", {"label":"Bank Account Number","type":"text","validation":"none"}],
+			[ "bank", {"label":"Bank","type":"select","validation":"none","remote-source":["Banks","id","name"]}],
+			[ "bank_branch", {"label":"Bank Branch","type":"select","validation":"none"}],
 			[ "contract_startdate", {"label":"Contract Signature Date","type":"date","require":true}],
 			[ "contract_enddate", {"label":"Contract End Date","type":"date","require":true}],
 	        [ "employment_status", {"label":"Employment Status","type":"select2","remote-source":["EmploymentStatus","id","name"]}],
@@ -271,7 +273,7 @@ EmployeeAdapter.method('getHelpLink', function () {
 EmployeeAdapter.method('postRenderForm', function(callBackData) {
     $("#field_salary").hide();
     $("#field_gross_salary").hide();
-    $("#field_total_salaries").hide();
+    $("#field_bank_branch").hide();
     if(!$("#id").val()){
         $("select").prepend("<option value=''>Please select an option</option>").val('');
         $(".select2-offscreen").select2("val", "");
@@ -279,6 +281,13 @@ EmployeeAdapter.method('postRenderForm', function(callBackData) {
     $("label[for='pay_grade']").text("Pay Grade Level*");
 });
 
+EmployeeAdapter.method('getBankBaranches',function(){
+    var bank = $("#bank").val();
+    $.post(this.moduleRelativeURL, {'a': 'ca', 'req': bank , 'mod': 'admin_employees', 'sa': 'getBankBaranches'}, function (data) {
+        $("#bank_branch").html(data);
+        $("#field_bank_branch").show();
+    })
+});
 
 EmployeeAdapter.method('getSalaryByGrade',function(jobtitleid,grade){
     var object = {"jobtitle":jobtitleid,"grade":grade};

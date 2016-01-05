@@ -8,12 +8,9 @@ class NotificationManager{
 	}
 	
 	public function addNotification($toEmployee, $message, $action, $type, $toUserId = null, $fromSystem = false){
-		
 		$userEmp = new User();
-		
 		if(!empty($toEmployee)){
 			$userEmp->load("employee = ?",array($toEmployee));
-			
 			if(!empty($userEmp->employee) && $userEmp->employee == $toEmployee){
 				$toUser = $userEmp->id;
 			}else{
@@ -22,8 +19,6 @@ class NotificationManager{
 		}else if(!empty($toUserId)){
 			$toUser = $toUserId;
 		}
-		
-		
 		$noti = new Notification();
 		if($fromSystem){
 			$noti->fromUser = 0;
@@ -34,10 +29,8 @@ class NotificationManager{
 			$noti->fromUser = $user->id;
 			$noti->fromEmployee = $user->employee;
 		}
-		
 		$noti->toUser = $toUser;
 		$noti->message = $message;
-		
 		if(!empty($noti->fromEmployee) && $noti->fromEmployee != 0){
 			$employee = $this->baseService->getElement('Employee',$noti->fromEmployee,null,true);
 			if(!empty($employee)){
@@ -45,21 +38,17 @@ class NotificationManager{
 				$noti->image = $employee->image;
 			}
 		}
-		
 		if(empty($noti->image)){
 			if($employee->gender == 'Male'){
 				$noti->image = BASE_URL."images/user_male.png";
 			}else{
 				$noti->image = BASE_URL."images/user_female.png";
 			}
-			
 		}
-
 		$noti->action = $action;
 		$noti->type = $type;
 		$noti->time = date('Y-m-d H:i:s');
 		$noti->status = 'Unread';
-		
 		$ok = $noti->Save();
 		if(!$ok){
 			error_log("Error adding notification: ".$noti->ErrorMsg());

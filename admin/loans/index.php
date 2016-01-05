@@ -26,13 +26,10 @@ define('MODULE_PATH',dirname(__FILE__));
 include APP_BASE_PATH.'header.php';
 include APP_BASE_PATH.'modulejslibs.inc.php';
 ?><div class="span9">
-			  
 	<ul class="nav nav-tabs" id="modTab" style="margin-bottom:0px;margin-left:5px;border-bottom: none;">
 		<li class="active"><a id="tabEmployeeCompanyLoan" href="#tabPageEmployeeCompanyLoan">Employee Loans</a></li>
 	</ul>
-	 
 	<div class="tab-content">
-
 		<div class="tab-pane active" id="tabPageEmployeeCompanyLoan">
 			<div id="EmployeeCompanyLoan" class="reviewBlock" data-content="List" style="padding-left:5px;">
 

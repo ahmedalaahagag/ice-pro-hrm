@@ -16,7 +16,11 @@
 	$('#country').change(function(){
 		modJs.changeGovernorate($(this));
 	 });
+	$("#project_category").change(function(){
+		modJs.getSubServiceCategory()
+	});
 	$( document ).ready(function() {
+
 		/*var institute = $('#field_employee_institution').last();
 
 		 if(institute){
@@ -53,7 +57,7 @@
 		{
 			service.before("<br><legend>Category Information</legend>");
 		}
-		var status = $('#field_status');
+		var status = $('#field_phase');
 		if(status)
 		{
 			status.before("<br><legend>Status Information</legend>");

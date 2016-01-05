@@ -71,7 +71,70 @@ TaxesSegmentsAdapter.method('getFormFields', function() {
 	];
 });
 
+/**
+ * Author: Ahmed Hagag
+ */
+function BanksAdapter(endPoint) {
+	this.initAdapter(endPoint);
+}
+
+BanksAdapter.inherits(AdapterBase);
 
 
+BanksAdapter.method('getDataMapping', function() {
+	return [
+		"id",
+		"name",
+	];
+});
+
+BanksAdapter.method('getHeaders', function() {
+	return [
+		{ "sTitle": "ID" },
+		{ "sTitle": "Bank Name" },
+	];
+});
+
+BanksAdapter.method('getFormFields', function() {
+	return [
+		[ "id", {"label":"ID","type":"hidden","validation":""}],
+		[ "name", {"label":"Bank Name","type":"text","require":true}],
+	];
+});
+
+/**
+ * Author: Ahmed Hagag
+ */
+
+function BanksBranchesAdapter(endPoint) {
+	this.initAdapter(endPoint);
+}
+
+BanksBranchesAdapter.inherits(AdapterBase);
+
+
+BanksBranchesAdapter.method('getDataMapping', function() {
+	return [
+		"id",
+		"bank",
+		"name",
+	];
+});
+
+BanksBranchesAdapter.method('getHeaders', function() {
+	return [
+		{ "sTitle": "ID" },
+		{ "sTitle": "Bank" },
+		{ "sTitle": "Branch Name" },
+	];
+});
+
+BanksBranchesAdapter.method('getFormFields', function() {
+	return [
+		[ "id", {"label":"ID","type":"hidden","validation":""}],
+		[ "name", {"label":"Branch Name","type":"text","require":true}],
+		[ "bank", {"label":"Bank Name","type":"select","require":true,"remote-source":["Banks","id","name"]}],
+	];
+});
 
 

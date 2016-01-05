@@ -35,8 +35,9 @@ DocumentAdapter.method('getFormFields', function() {
 	return [
 	        [ "id", {"label":"ID","type":"hidden"}],
 	        [ "name", {"label":"Name","type":"text","validation":""}],
-	        [ "details", {"label":"Details","type":"textarea","validation":"none"}]
-	];
+	        [ "details", {"label":"Details","type":"textarea","validation":"none"}],
+	        [ "required", {"label":"Required","type":"select","source":[["No","No"],["Yes","Yes"]]}]
+		];
 });
 
 DocumentAdapter.method('getHelpLink', function () {

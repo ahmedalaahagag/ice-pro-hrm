@@ -16,6 +16,7 @@ if (!class_exists('JobsAdminManager')) {
 		
 		public function setupModuleClassDefinitions(){
 			$this->addModelClass('JobTitles');
+			$this->addModelClass('JobTitlesNames');
 			$this->addModelClass('PayGrades');
 			$this->addModelClass('CompanyStructures');
 			$this->addModelClass('Employees');
@@ -47,6 +48,23 @@ if (!class_exists('JobTitles')) {
 	}
 }
 
+if (!class_exists('JobTitlesNames')) {
+	class JobTitlesNames extends ICEHRM_Record {
+		var $_table = 'JobTitlesNames';
+
+		public function getAdminAccess(){
+			return array("get","element","save","delete");
+		}
+
+		public function getManagerAccess(){
+			return array("get","element","save");
+		}
+
+		public function getUserAccess(){
+			return array();
+		}
+	}
+}
 if (!class_exists('PayGrades')) {
 	class PayGrades extends ICEHRM_Record {
 		var $_table = 'PayGrades';

@@ -85,7 +85,6 @@ EmployeeCompanyLoanAdapter.method('getActionButtonsHtml', function(id,data) {
 
 EmployeeCompanyLoanAdapter.method("postRenderForm", function(id,data) {
 	    $.post(this.moduleRelativeURL, {'a': 'ca', 'req': '', 'mod': 'admin_employees', 'sa': 'getSalary'}, function (data) {
-		console.log(data);
 		var obj  = jQuery.parseJSON(data);
 		$("#amount").val(obj.salary*2);
 		$('#amount').attr('readonly', true);
@@ -93,10 +92,20 @@ EmployeeCompanyLoanAdapter.method("postRenderForm", function(id,data) {
 		$("#monthly_installment").val(obj.salary/10);
 		$('#monthly_installment').attr('readonly', true);
 	});
-
-
+});
+EmployeeCompanyLoanAdapter.method('add', function() {
+	$.post(this.moduleRelativeURL, {'a': 'ca', 'req': '', 'mod': 'modules_loans', 'sa': 'hasAllRequiredDoucments'}, function (data) {
+		alert(data);
+		console.log(data);
+	})
 });
 
+EmployeeCompanyLoanAdapter.method('getMonths', function() {
+	var startDate = $("#start_date").val();
+	var lastDate = $("#last_installment_date").val();
+	console.log(startDate);
+	console.log(startDate);
+});
 function EmployeeExceptionalLoansAdapter(endPoint) {
 	this.initAdapter(endPoint);
 }

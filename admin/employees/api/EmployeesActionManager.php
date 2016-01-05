@@ -903,4 +903,15 @@ class EmployeesActionManager extends SubActionManager
         print_r($html);
         exit;
     }
+    public function getBankBaranches($req){
+        $branches = new BanksBranches();
+        $branches = $branches->Find('bank = ?',array($req));
+        $html="";
+        $html.='<option value="">Please select an option</option>';
+        foreach ($branches as $branch){
+            $html.='<option value='.$branch->id.'>'.$branch->name.'</option>';
+        }
+        print_r($html);
+        exit;
+    }
 }

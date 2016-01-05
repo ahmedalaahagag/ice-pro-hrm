@@ -50,7 +50,6 @@ function EmployeeCompanyLoanAdapter(endPoint) {
 EmployeeCompanyLoanAdapter.inherits(AdapterBase);
 
 
-
 EmployeeCompanyLoanAdapter.method('getDataMapping', function() {
 	return [
 	        "id",
@@ -97,3 +96,4 @@ EmployeeCompanyLoanAdapter.method('getFilters', function() {
 	        
 	];
 });
+

@@ -37,7 +37,9 @@ class JobsActionManager extends SubActionManager{
             foreach($gradeJobTitles as $gradeJobTitle)
             {
                 $gradeJobTitle = (array)$gradeJobTitle;
-                $jobtitleSection.='<tr><th>'.$gradeJobTitle['name'].'</th><th><div style="width:110px;"><img class="tableActionButton" src="'.BASE_URL.'images/edit.png" style="cursor:pointer;margin-left:15px;" rel="tooltip" title="Edit" onclick="modJsList[\'tabJobTitles\'].editNew('.$gradeJobTitle['id'].');return false;"></img><img class="tableActionButton" src="_BASE_images/edit.png" style="display:none;cursor:pointer;margin-left:15px;" rel="tooltip" title="Edit" onclick="modJsList[\'tabJobTitles\'].editNew('.$gradeJobTitle['id'].');return false;"></img></th></tr>';
+                $gradeJobTitleName = new JobTitlesNames();
+                $gradeJobTitleName = $gradeJobTitleName->Find('id = ?',array($gradeJobTitle['name']));
+                $jobtitleSection.='<tr><th>'.$gradeJobTitleName[0]->name.'</th><th><div style="width:110px;"><img class="tableActionButton" src="'.BASE_URL.'images/edit.png" style="cursor:pointer;margin-left:15px;" rel="tooltip" title="Edit" onclick="modJsList[\'tabJobTitles\'].editNew('.$gradeJobTitle['id'].');return false;"></img><img class="tableActionButton" src="_BASE_images/edit.png" style="display:none;cursor:pointer;margin-left:15px;" rel="tooltip" title="Edit" onclick="modJsList[\'tabJobTitles\'].editNew('.$gradeJobTitle['id'].');return false;"></img></th></tr>';
             }
         $jobtitleSection  .='</tbody>
         </table>
@@ -65,5 +67,10 @@ class JobsActionManager extends SubActionManager{
         exit;
 
     }
-
+    public function getGradeName($req){
+        $payGrade = new PayGrades();
+        $payGrade = $payGrade->Find('id = ?',array($req));
+        print_r($payGrade[0]->name);
+        exit;
+    }
 }

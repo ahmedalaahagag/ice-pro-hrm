@@ -74,7 +74,6 @@ if(!file_exists($logoFileName)){
 $logoFileUrl = BASE_URL."images/logo.png";
 }*/
 $logoFileUrl = UIManager::getInstance()->getCompanyLogoUrl();
-
 ?>
 <!DOCTYPE html>
 <!-- 
@@ -98,8 +97,6 @@ License: You must have a valid license purchased only from themeforest(the above
 <meta charset="utf-8"/>
 <title>PCP Intranet | Login Form </title>
 <link rel="icon" href="<?=BASE_URL?>/img/pcp-title-logo-01.png" type="image/x-icon">
-
-
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -107,20 +104,20 @@ License: You must have a valid license purchased only from themeforest(the above
 <meta content="" name="author"/>
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
-<link href="<?=BASE_URL?>/assets/global/css/components.css" rel="stylesheet" type="text/css"/>
-<link href="<?=BASE_URL?>/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-<link href="<?=BASE_URL?>/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
-<link href="<?=BASE_URL?>/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<link href="<?=BASE_URL?>/assets/global/plugins/uniform/css/uniform.default.min.css"rel="stylesheet" type="text/css"/>
+<link href="<?=BASE_URL?>assets/global/css/components.css" rel="stylesheet" type="text/css"/>
+<link href="<?=BASE_URL?>assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="<?=BASE_URL?>assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+<link href="<?=BASE_URL?>assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="<?=BASE_URL?>assets/global/plugins/uniform/css/uniform.default.min.css"rel="stylesheet" type="text/css"/>
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN PAGE LEVEL STYLES -->
-<link href="<?=BASE_URL?>/assets/global/plugins/select2/select2.css" rel="stylesheet" type="text/css"/>
-<link href="<?=BASE_URL?>/assets/admin/pages/css/login-soft.css" rel="stylesheet" type="text/css"/>
+<link href="<?=BASE_URL?>assets/global/plugins/select2/select2.css" rel="stylesheet" type="text/css"/>
+<link href="<?=BASE_URL?>assets/admin/pages/css/login-soft.css" rel="stylesheet" type="text/css"/>
 <!-- END PAGE LEVEL SCRIPTS -->
 <!-- BEGIN THEME STYLES -->
-<link href="<?=BASE_URL?>/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
-<link href="<?=BASE_URL?>/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
-<link href="<?=BASE_URL?>/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+<link href="<?=BASE_URL?>assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+<link href="<?=BASE_URL?>assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+<link href="<?=BASE_URL?>assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
 <link id="style_color" href="<?=BASE_URL?>/assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.js"></script>
 <script src="<?=BASE_URL?>bootstrap/js/bootstrap.js"></script>

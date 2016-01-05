@@ -62,11 +62,10 @@ JobTitleAdapter.method('printJobDescription',function(){
 JobTitleAdapter.method('getFormFields', function() {
 	return [
 	        [ "id", {"label":"ID","type":"hidden"}],
-			[ "name", {"label":"Job Title","type":"text"}],
+			[ "name", {"label":"Job Title","type":"select2","remote-source":["JobTitlesNames","id","name"]}],
 			[ "grade", {"label":"Job Grade","type":"text"}],
-
 		    [ "department", {"label":"Department","type":"select2","remote-source":["CompanyStructures","id","title"]}],
-		    [ "reporting_to", {"label":"Reporting To","type":"select2","remote-source":["JobTitles","id","name"]}],
+		    [ "reporting_to", {"label":"Reporting To","type":"select2","remote-source":["JobTitlesNames","id","name"]}],
 		    [ "description", {"label":"Job Description","type":"textarea"}],
 		    [ "general_duties", {"label":"General Duties","type":"select2multi","remote-source":["JobDuties","id","name"]}],
 		    [ "technical_duties", {"label":"Technical Duties","type":"select2multi","remote-source":["JobDuties","id","name"]}],
@@ -74,18 +73,18 @@ JobTitleAdapter.method('getFormFields', function() {
 			[ "education", {"label":"Education Degree","type":"select2","validation":"none","remote-source":["Educations","id","name"]}],
 			[ "skills", {"label":"Skills","type":"select2multi","validation":"none","remote-source":["Skills","id","name"]}],
 			[ "language", {"label":"Languages","type":"select2multi","validation":"none","remote-source":["Languages","id","name"]}],
-			[ "work_location", {"label":"Work Location","type":"select2","source":[["Office","Office"],["Site","Site"]]}],
+			[ "work_location", {"label":"Work Location","type":"select2","source":[["Office","Office"],["Site","Site"],["MBO","MBO"]]}],
 	];
 
 });
 
 JobTitleAdapter.method('getGradeName',function(){
-	var reqJson = {'id':gradesession};
-	var callBackData = [];
-	callBackData['callBackData'] = [];
-	callBackData['callBackSuccess'] = 'getGradeNameCallback';
-	callBackData['callBackFail'] = 'getGradeNameFailCallback';
-	this.customAction('getGradeName','admin_employees',reqJson,callBackData);
+	var grade = $("#grade").val();
+	$.post(this.moduleRelativeURL, {'a': 'ca', 'req': grade , 'mod': 'admin_jobs', 'sa': 'getGradeName'}, function (data) {
+		if($("#field_name").length){
+			$("#JobTitles_submit").prepend("<h3 style='margin-left:440px'>Grade : "+data+"</h3>");
+		}
+	})
 });
 
 JobTitleAdapter.method('getGradeNameCallback',function(callBackData){
@@ -97,6 +96,7 @@ JobTitleAdapter.method('postRenderForm',function(){
 	$("#grade").attr("value",gradesession);
 	$("#modaljobtitle").text($("#name").val());
 	$("#modaljobdescription").text($("#description").val());
+	modJs.getGradeName();
 });
 
 JobTitleAdapter.method('print',function(){
@@ -329,6 +329,36 @@ EmploymentStatusAdapter.method('getFormFields', function() {
 	        [ "id", {"label":"ID","type":"hidden"}],
 	        [ "name", {"label":"Employment Status","type":"text"}],
 	        [ "description",  {"label":"Description","type":"textarea","validation":""}]
+	];
+});
+/**
+ * JobTitlesNamesAdapter
+ */
+
+function JobTitlesNamesAdapter(endPoint) {
+	this.initAdapter(endPoint);
+}
+
+JobTitlesNamesAdapter.inherits(AdapterBase);
+
+JobTitlesNamesAdapter.method('getDataMapping', function() {
+	return [
+		"id",
+		"name",
+	];
+});
+
+JobTitlesNamesAdapter.method('getHeaders', function() {
+	return [
+		{ "sTitle": "ID" },
+		{ "sTitle": "Name" },
+	];
+});
+
+JobTitlesNamesAdapter.method('getFormFields', function() {
+	return [
+		[ "id", {"label":"ID","type":"hidden"}],
+		[ "name", {"label":"Job Title","type":"text"}],
 	];
 });
 
