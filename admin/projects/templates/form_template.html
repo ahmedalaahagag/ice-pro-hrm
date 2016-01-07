@@ -19,6 +19,13 @@
 	$("#project_category").change(function(){
 		modJs.getSubServiceCategory()
 	});
+	$("#service_category").change(function(){
+		modJs.getSubCategory()
+	});
+	$("#department1").change(function(){
+		modJs.getDepartmentEmployess();
+	});
+
 	$( document ).ready(function() {
 
 		/*var institute = $('#field_employee_institution').last();

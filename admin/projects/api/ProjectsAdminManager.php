@@ -178,3 +178,20 @@ if (!class_exists('Categories')) {
 		}
 	}
 }
+
+if (!class_exists('ProjectTeams')) {
+	class ProjectTeams extends ICEHRM_Record {
+		var $_table = 'ProjectTeams';
+		public function getAdminAccess(){
+			return array("get","element","save","delete");
+		}
+
+		public function getManagerAccess(){
+			return array("get","element","save","delete");
+		}
+
+		public function getUserAccess(){
+			return array("get","element");
+		}
+	}
+}

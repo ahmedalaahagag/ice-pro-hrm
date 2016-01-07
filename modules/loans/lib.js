@@ -20,13 +20,11 @@ Original work Copyright (c) 2012 [Gamonoid Media Pvt. Ltd]
 Developer: Thilina Hasantha (thilina.hasantha[at]gmail.com / facebook.com/thilinah)
  */
 
-function EmployeeCompanyLoanAdapter(endPoint) {
-	this.initAdapter(endPoint);
+function EmployeeCompanyLoanAdapter(endPoint,tab) {
+	this.initAdapter(endPoint,tab);
 }
 
 EmployeeCompanyLoanAdapter.inherits(AdapterBase);
-
-
 
 EmployeeCompanyLoanAdapter.method('getDataMapping', function() {
 	return [
@@ -93,19 +91,47 @@ EmployeeCompanyLoanAdapter.method("postRenderForm", function(id,data) {
 		$('#monthly_installment').attr('readonly', true);
 	});
 });
-EmployeeCompanyLoanAdapter.method('add', function() {
-	$.post(this.moduleRelativeURL, {'a': 'ca', 'req': '', 'mod': 'modules_loans', 'sa': 'hasAllRequiredDoucments'}, function (data) {
-		alert(data);
-		console.log(data);
-	})
-});
 
+EmployeeCompanyLoanAdapter.method('add', function(object,callBackData) {
+			var callBackData = [];
+			var reqJson = "";
+			callBackData['callBackData'] = [];
+			callBackData['callBackSuccess'] = 'hasAllRequiredDoucmentsCallBack';
+			callBackData['callBackFail'] = 'hasAllRequiredDoucmentsCallBackFail';
+			callBackData['callBackData'].push(object);
+			this.customAction('hasAllRequiredDoucments', 'modules_loans', reqJson, callBackData);
+});
+EmployeeCompanyLoanAdapter.method('hasAllRequiredDoucmentsCallBack', function(callBackDataObject) {
+            console.log(callBackDataObject);
+            callBackDataObject.type='normal';
+            var reqJson = JSON.stringify(callBackDataObject);
+            var callBackData = [];
+            callBackData['callBackData'] = [];
+            callBackData['callBackSuccess'] = 'addSuccessCallBack';
+            callBackData['callBackFail'] = 'addFailCallBack';
+            this.customAction('addLoan', 'modules_loans', reqJson, callBackData);
+});
+EmployeeCompanyLoanAdapter.method('hasAllRequiredDoucmentsCallBackFail', function(callBackData) {
+	this.showMessage("Error", "Applying to loan failed , you are missing some required documents");
+	this.get([]);
+});
+EmployeeCompanyLoanAdapter.method('addSuccessCallBack', function(callBackData) {
+		this.showMessage("Successful", "Loan application successful. You will be notified once your supervisor approve your leaves.");
+		this.get([]);
+	});
+
+EmployeeCompanyLoanAdapter.method('addFailCallBack', function(callBackData) {
+		this.showMessage("Error Occured while Applying Leave", callBackData);
+	});
 EmployeeCompanyLoanAdapter.method('getMonths', function() {
 	var startDate = $("#start_date").val();
 	var lastDate = $("#last_installment_date").val();
 	console.log(startDate);
 	console.log(startDate);
 });
+
+
+
 function EmployeeExceptionalLoansAdapter(endPoint) {
 	this.initAdapter(endPoint);
 }
@@ -153,8 +179,6 @@ EmployeeExceptionalLoansAdapter.method("postRenderForm", function(id,data) {
 		var obj  = jQuery.parseJSON(data);
 	    $("#employee").val(obj.userid);
 	});
-
-
 });
 
 EmployeeExceptionalLoansAdapter.method('getActionButtonsHtml', function(id,data) {
@@ -173,7 +197,6 @@ EmployeeExceptionalLoansAdapter.method('getActionButtonsHtml', function(id,data)
 	}else{
 		html = html.replace('_edit_','');
 	}
-
 	html = html.replace(/_id_/g,id);
 	html = html.replace(/_BASE_/g,this.baseUrl);
 	return html;

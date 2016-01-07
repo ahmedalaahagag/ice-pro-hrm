@@ -3243,3 +3243,95 @@
 [2016-01-04 18:35:41] ICE Hrm.INFO: Sending email to: Employee@pcp.com/ from: ICE Hrm <icehrm@mydomain.com> [] []
 [04-Jan-2016 18:35:43 Europe/Athens] Error adding notification: Column 'toUser' cannot be null
 [04-Jan-2016 19:07:49 Europe/Athens] PHP Fatal error:  Call to private method LoansActionManager::hasAllRequiredDoucments() from context '' in C:\xamppe\htdocs\ICEPRO\service.php on line 128
+[2016-01-05 11:08:35] ICE Hrm.INFO: Error creating time sheet : Cannot add or update a child row: a foreign key constraint fails (`icehrmdb`.`employeetimesheets`, CONSTRAINT `Fk_EmployeeTimeSheets_Employee` FOREIGN KEY (`employee`) REFERENCES `Employees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) [] []
+[2016-01-05 11:08:35] ICE Hrm.INFO: Error creating time sheet : Cannot add or update a child row: a foreign key constraint fails (`icehrmdb`.`employeetimesheets`, CONSTRAINT `Fk_EmployeeTimeSheets_Employee` FOREIGN KEY (`employee`) REFERENCES `Employees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) [] []
+[2016-01-05 11:08:36] ICE Hrm.INFO: Error creating time sheet : Cannot add or update a child row: a foreign key constraint fails (`icehrmdb`.`employeetimesheets`, CONSTRAINT `Fk_EmployeeTimeSheets_Employee` FOREIGN KEY (`employee`) REFERENCES `Employees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) [] []
+[2016-01-05 11:08:36] ICE Hrm.INFO: Error creating time sheet : Cannot add or update a child row: a foreign key constraint fails (`icehrmdb`.`employeetimesheets`, CONSTRAINT `Fk_EmployeeTimeSheets_Employee` FOREIGN KEY (`employee`) REFERENCES `Employees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) [] []
+[05-Jan-2016 11:44:44 Europe/Athens] PHP Fatal error:  Call to private method LoansActionManager::hasAllRequiredDoucments() from context '' in C:\xamppe\htdocs\ICEPRO\service.php on line 128
+[05-Jan-2016 11:45:01 Europe/Athens] PHP Fatal error:  Call to a member function getJsonArray() on a non-object in C:\xamppe\htdocs\ICEPRO\service.php on line 129
+[05-Jan-2016 11:45:24 Europe/Athens] PHP Fatal error:  Call to a member function getJsonArray() on a non-object in C:\xamppe\htdocs\ICEPRO\service.php on line 129
+[05-Jan-2016 11:50:47 Europe/Athens] PHP Fatal error:  Call to a member function getJsonArray() on a non-object in C:\xamppe\htdocs\ICEPRO\service.php on line 129
+[05-Jan-2016 15:18:00 Europe/Athens] PHP Fatal error:  Call to a member function getJsonArray() on a non-object in C:\xamppe\htdocs\ICEPRO\service.php on line 129
+[05-Jan-2016 15:19:19 Europe/Athens] PHP Fatal error:  Call to a member function getJsonArray() on a non-object in C:\xamppe\htdocs\ICEPRO\service.php on line 129
+[05-Jan-2016 15:20:59 Europe/Athens] PHP Fatal error:  Call to a member function getJsonArray() on a non-object in C:\xamppe\htdocs\ICEPRO\service.php on line 129
+[05-Jan-2016 15:24:09 Europe/Athens] PHP Fatal error:  Call to undefined method LoansActionManager::getJsonArray() in C:\xamppe\htdocs\ICEPRO\service.php on line 129
+[2016-01-05 15:57:38] ICE Hrm.INFO: Column 'start_date' cannot be null [] []
+[2016-01-05 15:58:46] ICE Hrm.INFO: Column 'start_date' cannot be null [] []
+[05-Jan-2016 16:00:09 Europe/Athens] PHP Fatal error:  Class 'LoanssEmailSender' not found in C:\xamppe\htdocs\ICEPRO\modules\loans\api\LoansActionManager.php on line 54
+[2016-01-05 16:00:32] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:00:32] ICE Hrm.INFO: [sendLeaveApplicationSubmittedEmail] email is empty [] []
+[05-Jan-2016 16:00:32 Europe/Athens] Error adding notification: Column 'toUser' cannot be null
+[2016-01-05 16:00:59] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:00:59] ICE Hrm.INFO: [sendLeaveApplicationSubmittedEmail] email is empty [] []
+[05-Jan-2016 16:00:59 Europe/Athens] Error adding notification: Column 'toUser' cannot be null
+[2016-01-05 16:05:46] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:05:46] ICE Hrm.INFO: [sendLeaveApplicationSubmittedEmail] email is empty [] []
+[2016-01-05 16:06:18] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:06:18] ICE Hrm.INFO: [sendLeaveApplicationSubmittedEmail] email is empty [] []
+[05-Jan-2016 16:06:18 Europe/Athens] PHP Fatal error:  Call to undefined function rint_r() in C:\xamppe\htdocs\ICEPRO\classes\NotificationManager.php on line 12
+[2016-01-05 16:06:25] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:06:25] ICE Hrm.INFO: [sendLeaveApplicationSubmittedEmail] email is empty [] []
+[2016-01-05 16:06:58] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:06:58] ICE Hrm.INFO: [sendLeaveApplicationSubmittedEmail] email is empty [] []
+[2016-01-05 16:07:09] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:07:09] ICE Hrm.INFO: Sending email to: admin@pcp.com/ from: ICE Hrm <icehrm@mydomain.com> [] []
+[2016-01-05 16:07:41] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:07:41] ICE Hrm.INFO: [sendLeaveApplicationSubmittedEmail] email is empty [] []
+[2016-01-05 16:07:49] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:07:49] ICE Hrm.INFO: [sendLeaveApplicationSubmittedEmail] email is empty [] []
+[2016-01-05 16:07:53] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:07:53] ICE Hrm.INFO: [sendLeaveApplicationSubmittedEmail] email is empty [] []
+[2016-01-05 16:08:01] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:08:01] ICE Hrm.INFO: [sendLeaveApplicationSubmittedEmail] email is empty [] []
+[2016-01-05 16:08:28] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:08:28] ICE Hrm.INFO: Sending email to: ahmedalaahagag@gmail.com/ from: ICE Hrm <icehrm@mydomain.com> [] []
+[2016-01-05 16:10:14] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:10:14] ICE Hrm.INFO: [sendLeaveApplicationSubmittedEmail] email is empty [] []
+[2016-01-05 16:12:43] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:12:43] ICE Hrm.INFO: [sendLeaveApplicationSubmittedEmail] email is empty [] []
+[2016-01-05 16:12:45] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:12:45] ICE Hrm.INFO: [sendLeaveApplicationSubmittedEmail] email is empty [] []
+[2016-01-05 16:13:11] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:13:11] ICE Hrm.INFO: [sendLeaveApplicationSubmittedEmail] email is empty [] []
+[2016-01-05 16:13:20] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:13:20] ICE Hrm.INFO: [sendLeaveApplicationSubmittedEmail] email is empty [] []
+[2016-01-05 16:13:23] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:13:23] ICE Hrm.INFO: [sendLeaveApplicationSubmittedEmail] email is empty [] []
+[2016-01-05 16:13:40] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:13:40] ICE Hrm.INFO: [sendLeaveApplicationSubmittedEmail] email is empty [] []
+[2016-01-05 16:16:55] ICE Hrm.INFO: Employee supervisor is empty [] []
+[2016-01-05 16:16:55] ICE Hrm.INFO: [sendLeaveApplicationSubmittedEmail] email is empty [] []
+[05-Jan-2016 16:58:00 Europe/Athens] PHP Fatal error:  Class name must be a valid object or a string in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 667
+[05-Jan-2016 16:58:03 Europe/Athens] PHP Fatal error:  Class name must be a valid object or a string in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 667
+[05-Jan-2016 16:58:03 Europe/Athens] PHP Fatal error:  Class '' not found in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 402
+[05-Jan-2016 16:58:04 Europe/Athens] PHP Fatal error:  Class name must be a valid object or a string in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 667
+[05-Jan-2016 16:58:06 Europe/Athens] PHP Fatal error:  Class name must be a valid object or a string in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 667
+[05-Jan-2016 16:58:06 Europe/Athens] PHP Fatal error:  Class '' not found in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 402
+[05-Jan-2016 16:58:07 Europe/Athens] PHP Fatal error:  Class name must be a valid object or a string in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 667
+[05-Jan-2016 16:59:09 Europe/Athens] PHP Fatal error:  Class name must be a valid object or a string in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 667
+[05-Jan-2016 16:59:09 Europe/Athens] PHP Fatal error:  Class '' not found in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 402
+[05-Jan-2016 16:59:09 Europe/Athens] PHP Fatal error:  Class name must be a valid object or a string in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 667
+[05-Jan-2016 17:15:34 Europe/Athens] PHP Fatal error:  Class 'Skill' not found in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 667
+[05-Jan-2016 17:16:20 Europe/Athens] PHP Fatal error:  Class '' not found in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 667
+[05-Jan-2016 17:16:21 Europe/Athens] PHP Fatal error:  Class '' not found in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 667
+[05-Jan-2016 17:16:21 Europe/Athens] PHP Fatal error:  Class name must be a valid object or a string in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 402
+[05-Jan-2016 17:16:21 Europe/Athens] PHP Fatal error:  Class '' not found in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 667
+[05-Jan-2016 17:16:23 Europe/Athens] PHP Fatal error:  Class '' not found in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 667
+[05-Jan-2016 17:16:23 Europe/Athens] PHP Fatal error:  Class name must be a valid object or a string in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 402
+[05-Jan-2016 17:16:23 Europe/Athens] PHP Fatal error:  Class '' not found in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 667
+[05-Jan-2016 17:29:54 Europe/Athens] PHP Fatal error:  Class 'Skill' not found in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 667
+[05-Jan-2016 17:40:52 Europe/Athens] PHP Fatal error:  Class 'Skill' not found in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 667
+[06-Jan-2016 10:07:25 Europe/Athens] PHP Fatal error:  Call to a member function SetFetchMode() on a non-object in C:\xamppe\htdocs\ICEPRO\adodb512\adodb-active-record.inc.php on line 405
+[06-Jan-2016 15:46:30 Europe/Athens] PHP Fatal error:  Call to undefined method stdClass::save() in C:\xamppe\htdocs\ICEPRO\admin\projects\api\ProjectsActionManager.php on line 113
+[06-Jan-2016 15:47:31 Europe/Athens] PHP Fatal error:  Call to undefined method stdClass::Save() in C:\xamppe\htdocs\ICEPRO\admin\projects\api\ProjectsActionManager.php on line 113
+[06-Jan-2016 15:48:09 Europe/Athens] PHP Fatal error:  Call to undefined method stdClass::Save() in C:\xamppe\htdocs\ICEPRO\admin\projects\api\ProjectsActionManager.php on line 113
+[06-Jan-2016 15:57:27 Europe/Athens] PHP Fatal error:  Call to undefined method Project::Insert_ID() in C:\xamppe\htdocs\ICEPRO\admin\projects\api\ProjectsActionManager.php on line 113
+[06-Jan-2016 15:59:09 Europe/Athens] PHP Fatal error:  Call to undefined method Project::Insert_ID() in C:\xamppe\htdocs\ICEPRO\admin\projects\api\ProjectsActionManager.php on line 113
+[06-Jan-2016 16:01:04 Europe/Athens] PHP Fatal error:  Call to a member function GetOne() on a non-object in C:\xamppe\htdocs\ICEPRO\adodb512\adodb-active-record.inc.php on line 640
+[06-Jan-2016 16:01:14 Europe/Athens] PHP Fatal error:  Cannot pass parameter 1 by reference in C:\xamppe\htdocs\ICEPRO\admin\projects\api\ProjectsActionManager.php on line 113
+[06-Jan-2016 16:19:28 Europe/Athens] PHP Fatal error:  Call to undefined method Project::GetOne() in C:\xamppe\htdocs\ICEPRO\admin\projects\api\ProjectsActionManager.php on line 113
+[06-Jan-2016 16:23:50 Europe/Athens] PHP Fatal error:  Call to a member function Insert_ID() on a non-object in C:\xamppe\htdocs\ICEPRO\admin\projects\api\ProjectsActionManager.php on line 113
+[06-Jan-2016 16:24:03 Europe/Athens] PHP Fatal error:  Call to a member function Insert_ID() on a non-object in C:\xamppe\htdocs\ICEPRO\admin\projects\api\ProjectsActionManager.php on line 113
+[06-Jan-2016 16:24:05 Europe/Athens] PHP Fatal error:  Call to undefined method Project::Insert_ID() in C:\xamppe\htdocs\ICEPRO\admin\projects\api\ProjectsActionManager.php on line 113
+[06-Jan-2016 16:31:18 Europe/Athens] PHP Fatal error:  Call to undefined method Project::Insert_ID() in C:\xamppe\htdocs\ICEPRO\admin\projects\api\ProjectsActionManager.php on line 113
+[06-Jan-2016 16:40:39 Europe/Athens] PHP Fatal error:  Call to undefined method Project::GetOne() in C:\xamppe\htdocs\ICEPRO\adodb512\adodb-active-record.inc.php on line 641

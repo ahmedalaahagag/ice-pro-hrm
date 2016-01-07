@@ -55,7 +55,7 @@ include APP_BASE_PATH.'modulejslibs.inc.php';
 <script>
 var modJsList = new Array();
 modJsList['tabEmployeeCompanyLoan'] = new EmployeeCompanyLoanAdapter('EmployeeCompanyLoan','EmployeeCompanyLoan');
-modJsList['tabEmployeeExceptionalLoans'] = new EmployeeExceptionalLoansAdapter('EmployeeExceptionalLoans','EmployeeExceptionalLoans');
+modJsList['tabEmployeeExceptionalLoans'] = new EmployeeExceptionalLoansAdapter('EmployeeExceptionalLoans');
 var modJs = modJsList['tabEmployeeCompanyLoan'];
 </script>
 <?php include APP_BASE_PATH.'footer.php';?>      

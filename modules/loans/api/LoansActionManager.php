@@ -30,17 +30,20 @@ class LoansActionManager extends SubActionManager{
 	public function addLoan($req){
 
 		//Adding Employee Leave
+		if($req->type=='normal')
+		$employeeLoan = new EmployeeCompanyLoan();
+		else
 		$employeeLoan = new EmployeeExceptionalLoans();
-		$employeeLoan->employee = $req->employee;
+		$employeeLoan->employee = $this->getCurrentProfileId();
 		$employeeLoan->amount = $req->amount;
-		$employeeLoan->date_start = $req->date_start;
+		$employeeLoan->start_date = $req->start_date;
 		$employeeLoan->last_installment_date = $req->last_installment_date;
+		$employeeLoan->monthly_installment = $req->monthly_installment;
 		$employeeLoan->details = $req->details;
 		$employeeLoan->status = "Suspended";
 		$employeeLoan->attachment = isset($req->attachment)?$req->attachment:"";
-		
 		$ok = $employeeLoan->Save();
-		
+
 		if(!$ok){
 			LogManager::getInstance()->info($employeeLoan->ErrorMsg());
 			return new IceResponse(IceResponse::ERROR,"Error occured while applying Loan.");
@@ -48,15 +51,14 @@ class LoansActionManager extends SubActionManager{
 		
 
 		if(!empty($this->emailSender)){
-			$loanssEmailSender = new LoanssEmailSender($this->emailSender, $this);
+			$loanssEmailSender = new LoansEmailSender($this->emailSender, $this);
 			$loanssEmailSender->sendLoanApplicationEmail($employeeLoan);
 			$loanssEmailSender->sendLoanApplicationSubmittedEmail($employeeLoan);
 		}
-		$employee= $this->getEmployeeById($req->employee);
+		$employee= $this->getEmployeeById($employeeLoan->employee);
 		$this->baseService->audit(IceConstants::AUDIT_ACTION, "Loan applied \ start:".$employeeLoan->date_start."\ end:".$employeeLoan->last_installment_date);
-		$notificationMsg = $employee->first_name." ".$employee->last_name." applied for a loan. Visit leave module to approve or reject";
-		
-		$this->baseService->notificationManager->addNotification($employee->supervisor,$notificationMsg,'{"type":"url","url":"g=modules&n=loans&m=module_Loans#tabPageExptionalEmployeeCompanyLoan"}',IceConstants::NOTIFICATION_LEAVE);
+		$notificationMsg = $employee->first_name." ".$employee->last_name." applied for a loan. Visit loan module to approve or reject";
+		$this->baseService->notificationManager->addNotification($employee->supervisor,$notificationMsg,'{"type":"url","url":"g=admin&n=loans&m=admin_Admin"}',IceConstants::NOTIFICATION_LOAN);
 		return new IceResponse(IceResponse::SUCCESS,$employeeLoan);
 	}
 	
@@ -775,7 +777,7 @@ class LoansActionManager extends SubActionManager{
 		return $sup;
 	}
 
-	private function hasAllRequiredDoucments(){
+	public function hasAllRequiredDoucments(){
 		$userID = $this->getCurrentProfileId();
 		$allRequiredDoucments = new Document();
 		$allRequiredDoucments = $allRequiredDoucments->Find('required = ?',array('Yes'));
@@ -783,10 +785,10 @@ class LoansActionManager extends SubActionManager{
 			$employeeDocument = new EmployeeDocument();
 			$hasDoucment = $employeeDocument->count('employee = ? AND document=? AND status = "Active"',array($userID,$requiredDoucment->id));
 			if($hasDoucment==0){
-				return false;
+				return new IceResponse(IceResponse::ERROR,0);
 			}
 		}
-		return true;
-	}
+		return new IceResponse(IceResponse::SUCCESS,1);
+		}
 
 }

@@ -1135,6 +1135,7 @@ class IceConstants{
 	const AUDIT_ACTION = "User Action";
 	
 	const NOTIFICATION_LEAVE = "Leave Module";
+	const NOTIFICATION_LOAN = "Loan Module";
 	const NOTIFICATION_TIMESHEET = "Time Module";
     const NOTIFICATION_TRAINING = "Training Module";
 }

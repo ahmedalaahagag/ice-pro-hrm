@@ -534,7 +534,8 @@ class ADODB_Active_Record {
 		}
 		return $this->_lasterr;
 	}
-	
+
+
 	function ErrorNo() 
 	{
 		if ($this->_dbat < 0) return -9999; // no database connection...
@@ -796,7 +797,7 @@ class ADODB_Active_Record {
 				$this->$k = $this->LastInsertID($db,$k);
 			}
 		}
-		
+		$this->_lastid = $this->$k;
 		$this->_original = $valarr;
 		return !empty($ok);
 	}

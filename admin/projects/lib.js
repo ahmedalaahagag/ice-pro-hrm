@@ -77,7 +77,7 @@ function ProjectAdapter(endPoint,tab,filter,orderBy) {
 
 ProjectAdapter.inherits(AdapterBase);
 
-
+var department = 1;
 
 ProjectAdapter.method('getDataMapping', function() {
 	return [
@@ -101,11 +101,12 @@ ProjectAdapter.method('getFormFields', function() {
 		        [ "id", {"label":"ID","type":"hidden"}],
 		        [ "name", {"label":"Project Name","type":"text"}],
 		        [ "media_name", {"label":"Media Name","type":"text","validation":""}],
-				[ "client", {"label":"Client","type":"text","remote-source":["Clients","id","name"]}],
+				[ "client", {"label":"Client","type":"select2","remote-source":["Clients","id","name"]}],
 				[ "client_rep", {"label":"Client Representative","type":"text"}],
 				[ "client_rep_phone", {"label":"Client Representative Phone","type":"text"}],
 				[ "pm", {"label":"Project Manager","type":"select2","remote-source":["Employees","id","first_name+last_name"]}],
 				[ "tba", {"label":"TBA","type":"text","validation":"number"}],
+				[ "department"+department+"", {"label":"Department","type":"select2","remote-source":["CompanyStructures","id","title"]}],
 
 				[ "budget", {"label":"Budget","type":"text","validation":"none"}],
 				[ "actual_budget", {"label":"Actual Budget","type":"text","validation":"none"}],
@@ -122,13 +123,13 @@ ProjectAdapter.method('getFormFields', function() {
 				["operation_moveout" , {"label":"Operations Move-out","type":"date","validation":"none"}],
 				["projec_closedout" , {"label":"Project Closed-out","type":"date","validation":"none"}],
 
-				["designer" , {"label":"Designer","type":"text","validation":""}],
-				["engineer" , {"label":"Engineer","type":"text","validation":""}],
-				["local_pm" , {"label":"Local PM","type":"text","validation":""}],
-				["inter_pm" , {"label":"International PM","type":"text","validation":""}],
+				["designer" , {"label":"Designer","type":"text","validation":"none"}],
+				["engineer" , {"label":"Engineer","type":"text","validation":"none"}],
+				["local_pm" , {"label":"Local PM","type":"text","validation":"none"}],
+				["inter_pm" , {"label":"International PM","type":"text","validation":"none"}],
 
-				["service_category" , {"label":"Services category","type":"text","validation":""}],
-				["service_subcategory" , {"label":"Services subcategory","type":"text","validation":""}],
+				["service_category" , {"label":"Service category","type":"select2","source":[["CivilWorks","Civil Works"],["Fitout","Fitout"],["Design","Design"]]}],
+				["service_subcategory" , {"label":"Services subcategory","type":"select2","source":[["","Please select service category"]]}],
 				["project_category" , {"label":"Project category","type":"select2","source":[["Residential","Residential"],["Commercial","Commercial"]]}],
 				["project_subcategory" , {"label":"Project subcategory","type":"select2","source":[["","Please select project category"]]}],
 
@@ -165,7 +166,14 @@ ProjectAdapter.method('changeGovernorate', function(country) {
 		}
 	},"JSON");
 });
-
+ProjectAdapter.method('add', function(object,callBackData) {
+	var callBackData = [];
+	var reqJson = JSON.stringify(object);
+	callBackData['callBackData'] = [];
+	callBackData['callBackSuccess'] = 'addProjectCallBack';
+	callBackData['callBackFail'] = 'addProjectCallBackFail';
+	this.customAction('addProject', 'admin_projects', reqJson, callBackData);
+});
 
 ProjectAdapter.method('getHelpLink', function () {
 	return 'http://blog.icehrm.com/?page_id=85';
@@ -174,8 +182,34 @@ ProjectAdapter.method('postRenderForm',function(){
 	$("#project_category").on('change',modJs.getSubServiceCategory());
 	$("#field_longitude").after('<div id="map"></div><style>#map {width: 500px;height: 400px;background-color: #CCC;margin-left: 286px}</style>');
 	this.initMap();
-
+	$("#field_department1").after('<div id="Department_'+department+'"></div><button type="button" id="btnAddDepartment" class="btn btn-success pull-right" style="display: none" onclick="modJs.addDepartment()">+ Add Department</button>')
 });
+
+ProjectAdapter.method('addDepartment',function () {
+	department = department+1;
+	$.post(this.moduleRelativeURL, {'a': 'ca', 'req':  department , 'mod': 'admin_projects', 'sa': 'getDepartments'}, function (data) {
+		$("#Department_"+department).append(data);
+		$("#department" + department).select2();
+		var departmentName = "#department"+department;
+		$("#Department_" + department).append('<script>$("'+departmentName+'").on("change",function(){modJs.getDepartmentEmployess()});</script>');
+	});
+});
+
+ProjectAdapter.method('getDepartmentEmployess', function () {
+	var departmentid = $("#department"+department).val();
+	var dataObject = departmentid+'_'+department;
+	$.post(this.moduleRelativeURL, {'a': 'ca', 'req':  dataObject , 'mod': 'admin_projects', 'sa': 'getDepartmentEmployess'}, function (data) {
+		$("#field_supervisors"+department).remove();
+		$("#field_members"+department).remove();
+		$("#Department_"+department).append(data);
+		$("#Supervisors"+department).select2();
+		$("#Members"+department).select2();
+		$("#btnAddDepartment").show(data);
+		var nextDiv = department+1;
+		$("#Department_"+department).after('<div id="Department_'+nextDiv+'"></div>');
+	})
+});
+
 ProjectAdapter.method('initMap',function(){
 $.getScript('https://maps.googleapis.com/maps/api/js', function(){
 	var  marker;
@@ -226,6 +260,14 @@ ProjectAdapter.method('getSubServiceCategory',function(){
 	 $("#project_subcategory").html(data);
 	})
 });
+ProjectAdapter.method('getSubCategory',function(){
+	var servicecat = $("#service_category").val();
+	$.post(this.moduleRelativeURL, {'a': 'ca', 'req': servicecat , 'mod': 'admin_projects', 'sa': 'getSubCategory'}, function (data) {
+		$("#service_subcategory").html(data);
+	})
+});
+
+
 /*
  * EmployeeProjectAdapter
  */
