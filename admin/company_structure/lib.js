@@ -38,7 +38,7 @@ CompanyStructureAdapter.method('getFormFields', function() {
 			[ "node_type", {"label":"Structure Type","type":"select","source":[["Node","Node"],["JobTitle","JobTitle"]]}],
 			[ "type", {"label":"Type","type":"select2","source":[["Company","PCP"],["Head Office","Head Office"],["Regional Office","Regional Office"],["Department","Department"],["Unit","Section"],["Other","Other"]]}],
 	        [ "title", {"label":"Name","type":"text"}],
-	        [ "title_select", {"label":"Job Title","type":"select2","allow-null":true,"null-label":"None","remote-source":["JobTitles","id","name"]}],
+	        [ "title_select", {"label":"Job Title","type":"select2","allow-null":true,"null-label":"None","remote-source":["JobTitlesNames","id","name"]}],
 	        [ "description", {"label":"Details","type":"textarea","validation":"none"}],
 			[ "country", {"label":"Country","type":"select2","value":'EG',"remote-source":["Country","code","name"]}],
 			[ "parent", {"label":"Parent Structure","type":"select","allow-null":true,"null-label":"None","remote-source":["CompanyStructure","id","title"]}],
@@ -68,40 +68,44 @@ function CompanyGraphAdapter(endPoint) {
 CompanyGraphAdapter.inherits(CompanyStructureAdapter);
 
 
-CompanyGraphAdapter.method('convertToTree', function(data) {
+CompanyGraphAdapter.method('convertToTree', function(data){
 	var ice = {};
 	ice['id'] = -1;
 	ice['title'] = '';
 	ice['name'] = '';
+	ice['type'] = '';
 	ice['children'] = [];
-	
+
 	var parent = null;
-	
 	var added = {};
 	
 	
 	for(var i=0;i<data.length;i++){
-		
 		data[i].name = data[i].title;
-		
 		if(data[i].parent != null && data[i].parent != undefined){
 			parent = this.findParent(data,data[i].parent);
 			if(parent != null){
 				if(parent.children == undefined || parent.children == null){
 					parent.children = [];
 				}
-				parent.children.push(data[i]);
+                if(data[i].type =='JobTitle')
+                data[i].type='JobTitle'
+                else
+                data[i].type='Node'
+                parent.children.push(data[i]);
 			}
 		}
-		
 	}
 	
 	for(var i=0;i<data.length;i++){
 		if(data[i].parent == null || data[i].parent == undefined){
+            if(data[i].type =='JobTitle')
+                data[i].type='JobTitle'
+            else
+                data[i].type='Node'
 			ice['children'].push(data[i]);
 		}
 	}
-	
 	return ice;
 	
 });
@@ -166,13 +170,14 @@ CompanyGraphAdapter.method('update', function(source, tree, root) {
 	  // Compute the new tree layout.
 	  var nodes = tree.nodes(root).reverse();
 
-	  // Normalize for fixed-depth.
-	  nodes.forEach(function(d) { d.y = d.depth * 180; });
+    // Normalize for fixed-depth.
+	  nodes.forEach(function(d) {
+          d.y = d.depth * 180;
+      });
 
 	  // Update the nodes�
 	  var node = that.vis.selectAll("g.node")
 	      .data(nodes, function(d) { return d.id || (d.id = ++that.nodeIdCounter); });
-
 	  // Enter any new nodes at the parent's previous position.
 	  var nodeEnter = node.enter().append("svg:g")
 	      .attr("class", "node")

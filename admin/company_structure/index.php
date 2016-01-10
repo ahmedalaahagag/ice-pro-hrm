@@ -39,6 +39,13 @@ include APP_BASE_PATH.'modulejslibs.inc.php';
   stroke-width: 1.5px;
 }
 
+.Jnode circle {
+	cursor: pointer;
+	fill: #fff;
+	stroke: red;
+	stroke-width: 1.5px;
+}
+
 .node text {
   font-size: 11px;
 	-ms-transform: rotate(-90deg); /* IE 9 */
@@ -84,7 +91,7 @@ path.link {
 </div>
 <script>
 var modJsList = new Array();
-modJsList['tabCompanyStructure'] 	= new CompanyStructureAdapter('CompanyStructure');
+modJsList['tabCompanyStructure'] = new CompanyStructureAdapter('CompanyStructure');
 
 <?php if(isset($modulePermissions['perm']['Add Company Structure']) && $modulePermissions['perm']['Add Company Structure'] == "No"){?>
 modJsList['tabCompanyStructure'].setShowAddNew(false);

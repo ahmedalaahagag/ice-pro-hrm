@@ -63,7 +63,7 @@ class JobsActionManager extends SubActionManager{
         $jobbenefitsSection  .='</tbody>
         </table>
         </div>';
-        echo $jobbenefitsSection;
+        print_r($jobbenefitsSection);
         exit;
 
     }
@@ -71,6 +71,40 @@ class JobsActionManager extends SubActionManager{
         $payGrade = new PayGrades();
         $payGrade = $payGrade->Find('id = ?',array($req));
         print_r($payGrade[0]->name);
+        exit;
+    }
+    public function getGeneralDuites(){
+        $duites = new Duties();
+        $duites = $duites->Find('type = ?',array(1));
+        foreach($duites as $duty){
+            $html.='<option value="'.$duty->id.'" data-toggle="tooltip" title="'.$duty->description.'">'.$duty->name.'</option>';
+        }
+        print_r($html);
+        exit;
+    }
+    public function getTechnicalDuites(){
+        $duites = new Duties();
+        $duites = $duites->Find('type = ?',array(2));
+        foreach($duites as $duty){
+            $html.='<option value="'.$duty->id.'" data-toggle="tooltip" title="'.$duty->description.'">'.$duty->name.'</option>';
+        }
+        print_r($html);
+        exit;
+    }
+    public function getStrategicDuites(){
+        $duites = new Duties();
+        $duites = $duites->Find('type = ?',array(3));
+        foreach($duites as $duty){
+            $html.='<option value="'.$duty->id.'" data-toggle="tooltip" title="'.$duty->description.'">'.$duty->name.'</option>';
+        }
+        print_r($html);
+        exit;
+    }
+    public function getDutyDescription(){
+        $dutyname = $_REQUEST['req'];
+        $duites = new Duties();
+        $duites = $duites->Find('name = ?',array($dutyname));
+        print_r($duites[0]->description);
         exit;
     }
 }

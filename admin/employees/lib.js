@@ -279,6 +279,7 @@ EmployeeAdapter.method('postRenderForm', function(callBackData) {
         $(".select2-offscreen").select2("val", "");
     }
     $("label[for='pay_grade']").text("Pay Grade Level*");
+
 });
 
 EmployeeAdapter.method('getBankBaranches',function(){
@@ -479,6 +480,14 @@ EmployeeAdapter.method('getDepentants', function(id) {
         $("#Dependants").html(callBackData);
     })
 });
+EmployeeAdapter.method('getDoucments', function(id) {
+    var object = {"id":id};
+    var reqJson = JSON.stringify(object);
+    $.get(this.moduleRelativeURL, {'a': 'ca', 'req': id , 'mod': 'admin_employees', 'sa': 'getDoucments'}, function (callBackData) {
+        console.log(callBackData);
+        $("#Doucments").html(callBackData);
+    })
+});
 
 EmployeeAdapter.method('renderEmployee', function(data) {
 
@@ -538,6 +547,7 @@ EmployeeAdapter.method('renderEmployee', function(data) {
 
     this.getEmergencyContacts(data.id);
     this.getDepentants(data.id);
+    this.getDoucments(data.id);
 
 
 

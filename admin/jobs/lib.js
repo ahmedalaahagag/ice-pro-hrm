@@ -27,6 +27,7 @@ JobTitleAdapter.method('addNew', function() {
 	$("#tabJobTitles").trigger("click");
 	modJs.renderForm();
 	window.stop();
+	modJs.getGradeName();
 });
 
 JobTitleAdapter.method('editNew', function(id) {
@@ -64,27 +65,26 @@ JobTitleAdapter.method('getFormFields', function() {
 	        [ "id", {"label":"ID","type":"hidden"}],
 			[ "name", {"label":"Job Title","type":"select2","remote-source":["JobTitlesNames","id","name"]}],
 			[ "grade", {"label":"Job Grade","type":"text"}],
+			[ "code", {"label":"Code","type":"text"}],
 		    [ "department", {"label":"Department","type":"select2","remote-source":["CompanyStructures","id","title"]}],
 		    [ "reporting_to", {"label":"Reporting To","type":"select2","remote-source":["JobTitlesNames","id","name"]}],
-		    [ "description", {"label":"Job Description","type":"textarea"}],
+		    [ "description", {"label":"Job Summry","type":"textarea"}],
 		    [ "general_duties", {"label":"General Duties","type":"select2multi","remote-source":["JobDuties","id","name"]}],
 		    [ "technical_duties", {"label":"Technical Duties","type":"select2multi","remote-source":["JobDuties","id","name"]}],
 		    [ "strategic_duties", {"label":"Strategic Duties","type":"select2multi","remote-source":["JobDuties","id","name"]}],
 			[ "education", {"label":"Education Degree","type":"select2","validation":"none","remote-source":["Educations","id","name"]}],
 			[ "skills", {"label":"Skills","type":"select2multi","validation":"none","remote-source":["Skills","id","name"]}],
 			[ "language", {"label":"Languages","type":"select2multi","validation":"none","remote-source":["Languages","id","name"]}],
-			[ "work_location", {"label":"Work Location","type":"select2","source":[["Office","Office"],["Site","Site"],["MBO","MBO"]]}],
+			[ "work_location", {"label":"Work Location","type":"select2","source":[["Office","Office"],["Site","Site"]]}],
 	];
 
 });
 
 JobTitleAdapter.method('getGradeName',function(){
 	var grade = $("#grade").val();
-	$.post(this.moduleRelativeURL, {'a': 'ca', 'req': grade , 'mod': 'admin_jobs', 'sa': 'getGradeName'}, function (data) {
-		if($("#field_name").length){
-			$("#JobTitles_submit").prepend("<h3 style='margin-left:440px'>Grade : "+data+"</h3>");
-		}
-	})
+	$.post(this.moduleRelativeURL,{'a': 'ca', 'req': grade , 'mod': 'admin_jobs', 'sa': 'getGradeName' } , function (data) {
+		$("#JobTitles_submit").prepend("<h3 id='gradetitle' style='margin-left:440px'>Grade : " + data + "</h3>");
+		})
 });
 
 JobTitleAdapter.method('getGradeNameCallback',function(callBackData){
@@ -96,7 +96,44 @@ JobTitleAdapter.method('postRenderForm',function(){
 	$("#grade").attr("value",gradesession);
 	$("#modaljobtitle").text($("#name").val());
 	$("#modaljobdescription").text($("#description").val());
+	$("#general_duties").on('change',function(){
+		modJs.getToolTip();
+	})
+	$("#technical_duties").on('change',function(){
+		modJs.getToolTip();
+	})
+	$("#strategic_duties").on('change',function(){
+		modJs.getToolTip();
+	})
+	this.getGeneralDuites();
+	this.getTechnicalDuites();
+	this.getStrategicDuites();
+	this.getToolTip();
 	modJs.getGradeName();
+});
+JobTitleAdapter.method('getToolTip',function(){
+	$(".select2-search-choice>div").each(function(index, value) {
+		var thisObject =  $(this);
+		$.post('http://localhost/icepro/app/service.php',{'a': 'ca', 'req': $(this).text() , 'mod': 'admin_jobs', 'sa': 'getDutyDescription'}, function (data) {
+			thisObject.attr('data-toggle','tooltip');
+			thisObject.attr('title',data);
+		})
+})
+});
+JobTitleAdapter.method('getGeneralDuites',function(){
+	$.post(this.moduleRelativeURL, {'a': 'ca', 'req': '' , 'mod': 'admin_jobs', 'sa': 'getGeneralDuites'}, function (data) {
+		$("#general_duties").html(data);
+	})
+});
+JobTitleAdapter.method('getTechnicalDuites',function(){
+	$.post(this.moduleRelativeURL, {'a': 'ca', 'req':''  , 'mod': 'admin_jobs', 'sa': 'getTechnicalDuites'}, function (data) {
+		$("#technical_duties").html(data);
+	})
+});
+JobTitleAdapter.method('getStrategicDuites',function(){
+$.post(this.moduleRelativeURL, {'a': 'ca', 'req': '' , 'mod': 'admin_jobs', 'sa': 'getStrategicDuites'}, function (data) {
+		$("#strategic_duties").html(data);
+	})
 });
 
 JobTitleAdapter.method('print',function(){
@@ -147,10 +184,12 @@ GradeBenefitsAdapter.method('getFormFields', function() {
 	return [
 		[ "id", {"label":"ID","type":"hidden","validation":""}],
 		[ "grade", {"label":"Job Grade","type":"text"}],
-		[ "type", {"label":"Benefit Type","type":"select2","source":[["Advantage","Advantage"],["Allowance","Allowance"],["Other","Other"]	]}],
 		[ "item", {"label":"Item Name","type":"text", "required":true ,"validation":"notEmpty"}],
-		[ "value", {"label":"Item Value","type":"text", "required":true ,"validation":"number"}],
-
+		[ "type", {"label":"Item Type","type":"select2", "required":true ,"source":[['Allowance','Allowance'],['Advantage','Advantage']]}],
+		[ "value", {"label":"Value","type":"text", "required":true ,"validation":"number"}],
+		[ "depreciation_time", {"label":"Depreciation Time","type":"text", "required":true ,"validation":"none"}],
+		[ "depreciation_percentage", {"label":"Depreciation Percentage","type":"text", "required":true ,"validation":"none"}],
+		[ "image", {"label":"Item Image","type":"fileupload","validation":"none"}],
 	];
 });
 
@@ -169,6 +208,20 @@ GradeBenefitsAdapter.method('editNew', function(id) {
 GradeBenefitsAdapter.method('postRenderForm',function(){
 	$("#field_grade").hide();
 	$("#grade").attr("value",gradesession);
+	$("#depreciation_time").after("<span>Months</span>");
+	$("#depreciation_percentage").after("<span>Per Month</span>");
+	$("#field_depreciation_time").val(0);
+	$("#field_depreciation_percentage").val(0);
+	$("#type").on('change', function () {
+		if($("#type").val()=='Allowance'){
+			$("#field_depreciation_time").hide();
+			$("#field_depreciation_percentage").hide();
+		}
+		if($("#type").val()=='Advantage'){
+			$("#field_depreciation_time").show();
+			$("#field_depreciation_percentage").show();
+		}
+	})
 });
 GradeBenefitsAdapter.method('getHelpLink', function () {
 	return 'http://blog.icehrm.com/?page_id=90';

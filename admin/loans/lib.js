@@ -56,7 +56,6 @@ EmployeeCompanyLoanAdapter.method('getDataMapping', function() {
 	        "employee",
 	        "start_date",
 	        "period_months",
-	        "currency",
 	        "amount",
 	        "status"
 	];
@@ -68,7 +67,6 @@ EmployeeCompanyLoanAdapter.method('getHeaders', function() {
 			{ "sTitle": "Employee" },
 			{ "sTitle": "Loan Start Date"},
 			{ "sTitle": "Loan Period (Months)"},
-			{ "sTitle": "Currency"},
 			{ "sTitle": "Amount"},
 			{ "sTitle": "Status"}
 	];

@@ -70,7 +70,7 @@ if($action == 'get'){
 	
 }else if($action == 'delete'){
 	$ret['object'] = BaseService::getInstance()->deleteElement($_REQUEST['t'],$_REQUEST['id']);
-	if($ret['object'] == null){
+		if($ret['object'] == null){
 		$ret['status'] = "SUCCESS";	
 	}else{
 		$ret['status'] = "ERROR";

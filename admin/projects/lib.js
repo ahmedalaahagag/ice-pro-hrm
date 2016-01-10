@@ -41,11 +41,9 @@ ClientAdapter.method('getFormFields', function() {
 		        [ "name", {"label":"Name","type":"text"}],
 		        [ "details",  {"label":"Details","type":"textarea","validation":"none"}],
 		        [ "address",  {"label":"Address","type":"textarea","validation":"none"}],
-		        [ "client_rep", {"label":"Contact Representative","type":"text","validation":"none"}],
 		        [ "contact_number", {"label":"Contact Number","type":"text","validation":"none"}],
 		        [ "contact_email", {"label":"Contact Email","type":"text","validation":"none"}],
 		        [ "company_url", {"label":"Company Url","type":"text","validation":"none"}],
-		        [ "status", {"label":"Status","type":"select","source":[["Active","Active"],["Inactive","Inactive"]]}],
 		        [ "first_contact_date", {"label":"First Contact Date","type":"date","validation":"none"}]
 		];
 	}else{
@@ -175,23 +173,63 @@ ProjectAdapter.method('add', function(object,callBackData) {
 	this.customAction('addProject', 'admin_projects', reqJson, callBackData);
 });
 
+ProjectAdapter.method('addProjectCallBack',function(callBackData){
+	window.reload();
+});
+
+ProjectAdapter.method('addProjectCallBackFail',function(callBackData){
+	this.showMessage("Error", "Error Saving Project");
+	this.get([]);
+});
+
 ProjectAdapter.method('getHelpLink', function () {
 	return 'http://blog.icehrm.com/?page_id=85';
 });
+
 ProjectAdapter.method('postRenderForm',function(){
 	$("#project_category").on('change',modJs.getSubServiceCategory());
 	$("#field_longitude").after('<div id="map"></div><style>#map {width: 500px;height: 400px;background-color: #CCC;margin-left: 286px}</style>');
 	this.initMap();
 	$("#field_department1").after('<div id="Department_'+department+'"></div><button type="button" id="btnAddDepartment" class="btn btn-success pull-right" style="display: none" onclick="modJs.addDepartment()">+ Add Department</button>')
+	$("#field_department1").after('<div id="Departments"></div>')
+	if($("#id").val()) {
+		var id =$("#id").val();
+		var baseURL=this.moduleRelativeURL;
+		$.post(this.moduleRelativeURL, {
+			'a': 'ca',
+			'req': id,
+			'mod': 'admin_projects',
+			'sa': 'getProjectTeam'
+		}, function (data) {
+			$("#field_department1").html(data);
+			$("select").select2();
+			$("#btnAddDepartment").show();
+			$.post(baseURL, {'a': 'ca', 'req':  id , 'mod': 'admin_projects', 'sa': 'getLastDepartment'}, function (data) {
+				department = parseInt(data);
+			})
+		})
+	}
 });
-
+ProjectAdapter.method('removeDepartment',function (id) {
+		$("#Department_"+id).remove();
+		$("#removeBtn"+id).remove();
+});
 ProjectAdapter.method('addDepartment',function () {
 	department = department+1;
 	$.post(this.moduleRelativeURL, {'a': 'ca', 'req':  department , 'mod': 'admin_projects', 'sa': 'getDepartments'}, function (data) {
-		$("#Department_"+department).append(data);
-		$("#department" + department).select2();
-		var departmentName = "#department"+department;
+		if($("#Department_" + department).length){
+			var departmentName = "#department"+department;
+			$("#Department_"+department).append(data);
+			$("#department" + department).select2();
 		$("#Department_" + department).append('<script>$("'+departmentName+'").on("change",function(){modJs.getDepartmentEmployess()});</script>');
+		}
+		else{
+			$('#Departments').append('<div id="Department_'+department+'"></div>');
+			var departmentName = "#department"+department;
+			$("#Department_"+department).append(data);
+			$("#department" + department).select2();
+			$("#Department_" + department).append('<script>$("'+departmentName+'").on("change",function(){modJs.getDepartmentEmployess()});</script>');
+		}
 	});
 });
 

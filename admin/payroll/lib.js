@@ -181,13 +181,9 @@ DeductionAdapter.method('doCustomValidation', function(params) {
 });
 
 DeductionAdapter.method('postRenderForm', function(object, $tempDomObj) {
-
     $tempDomObj.find("#field_componentType").hide();
     $tempDomObj.find("#field_percentage_type").hide();
     $tempDomObj.find("#field_component").hide();
-
-
-
     $tempDomObj.find("#percentage_type").off().on('change',function(e){
         if(e.val == "On Component"){
             $("#componentType").hide();

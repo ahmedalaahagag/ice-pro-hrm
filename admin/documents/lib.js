@@ -19,7 +19,7 @@ DocumentAdapter.method('getDataMapping', function() {
 	return [
 	        "id",
 	        "name",
-	        "details"
+			"required"
 	];
 });
 
@@ -27,7 +27,7 @@ DocumentAdapter.method('getHeaders', function() {
 	return [
 			{ "sTitle": "ID" ,"bVisible":false},
 			{ "sTitle": "Name" },
-			{ "sTitle": "Details"}
+			{ "sTitle": "Required"},
 	];
 });
 
