@@ -30,7 +30,6 @@ EmployeeCompanyLoanAdapter.method('getDataMapping', function() {
 	return [
 	        "id",
 	        "start_date",
-	        "period_months",
 	        "amount",
 	        "status"
 	];
@@ -40,7 +39,6 @@ EmployeeCompanyLoanAdapter.method('getHeaders', function() {
 	return [
 			{ "sTitle": "ID" ,"bVisible":false},
 			{ "sTitle": "Loan Start Date"},
-			{ "sTitle": "Loan Period (Months)"},
 			{ "sTitle": "Amount"},
 			{ "sTitle": "Status"}
 	];
@@ -52,7 +50,6 @@ EmployeeCompanyLoanAdapter.method('getFormFields', function() {
 		[ "employee", {"label":"employee","type":"hidden"}],
 		[ "start_date", {"label":"Loan Start Date","type":"date","validation":""}],
 		[ "last_installment_date", {"label":"Last Installment Date","type":"date","validation":"none"}],
-		[ "period_months", {"label":"Loan Period (Months)","type":"text","validation":"number"}],
 		[ "amount", {"label":"Loan Amount","type":"text","validation":"float"}],
 		[ "monthly_installment", {"label":"Monthly Installment 10% of the salary","type":"text"}],
 	];
@@ -143,7 +140,6 @@ EmployeeExceptionalLoansAdapter.method('getDataMapping', function() {
 		"id",
 		"loan",
 		"start_date",
-		"period_months",
 		"amount",
 		"status"
 	];
@@ -154,7 +150,6 @@ EmployeeExceptionalLoansAdapter.method('getHeaders', function() {
 		{ "sTitle": "ID" ,"bVisible":false},
 		{ "sTitle": "Loan Type" },
 		{ "sTitle": "Loan Start Date"},
-		{ "sTitle": "Loan Period (Months)"},
 		{ "sTitle": "Amount"},
 		{ "sTitle": "Status"}
 	];
@@ -166,7 +161,6 @@ EmployeeExceptionalLoansAdapter.method('getFormFields', function() {
 			[ "employee", {"label":"employee","type":"hidden"}],
 			[ "start_date", {"label":"Loan Start Date","type":"date","validation":""}],
 			[ "last_installment_date", {"label":"Last Installment Date","type":"date","validation":"none"}],
-			[ "period_months", {"label":"Loan Period (Months)","type":"text","validation":"number","required":"true"}],
 			[ "amount", {"label":"Loan Amount","type":"text","validation":"float","required":"true"}],
 			[ "monthly_installment", {"label":"Monthly Installment","type":"text","validation":"float","required":"true"}],
 			[ "details", {"label":"Details","type":"textarea","validation":"none"}],

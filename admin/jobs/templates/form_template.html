@@ -16,12 +16,13 @@
   	</div>
 
 </form>
-<div id="printJobDescription" style="display: none; width: 800px; margin: 0px auto;">
+<div id="printJobDescription" style="display: block; width: 800px; margin: 0px auto;-webkit-print-color-adjust: exact;">
 
 </div>
 <script type="text/javascript">
 	$(document).ready(function(){
 		if($("#field_general_duties").length){
+			$("#printJobDescription").hide();
 			$("#printjob_description").show();
 		}
 	});

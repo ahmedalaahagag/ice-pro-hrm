@@ -55,7 +55,6 @@ EmployeeCompanyLoanAdapter.method('getDataMapping', function() {
 	        "id",
 	        "employee",
 	        "start_date",
-	        "period_months",
 	        "amount",
 	        "status"
 	];
@@ -66,7 +65,6 @@ EmployeeCompanyLoanAdapter.method('getHeaders', function() {
 			{ "sTitle": "ID" ,"bVisible":false},
 			{ "sTitle": "Employee" },
 			{ "sTitle": "Loan Start Date"},
-			{ "sTitle": "Loan Period (Months)"},
 			{ "sTitle": "Amount"},
 			{ "sTitle": "Status"}
 	];
@@ -78,7 +76,6 @@ EmployeeCompanyLoanAdapter.method('getFormFields', function() {
 	        [ "employee", {"label":"Employee","type":"select2","remote-source":["Employee","id","first_name+last_name"]}],
 	        [ "start_date", {"label":"Loan Start Date","type":"date","validation":""}],
 	        [ "last_installment_date", {"label":"Last Installment Date","type":"date","validation":"none"}],
-	        [ "period_months", {"label":"Loan Period (Months)","type":"text","validation":"number"}],
 	        [ "currency", {"label":"Currency","type":"select2","remote-source":["CurrencyType","id","name"]}],
 	        [ "amount", {"label":"Loan Amount","type":"text","validation":"float"}],
 	        [ "monthly_installment", {"label":"Monthly Installment","type":"text","validation":"float"}],

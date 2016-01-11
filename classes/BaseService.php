@@ -601,7 +601,6 @@ class BaseService{
 		$ele = new $table();
 		
 		$ele->Load('id = ?',array($id));
-
 		$this->checkSecureAccess("delete",$ele);
 		
 		if(isset($this->nonDeletables[$table])){

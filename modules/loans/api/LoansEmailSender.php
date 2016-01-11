@@ -10,7 +10,6 @@ class LoansEmailSender{
 	}
 	
 	private function getEmployeeSupervisor($employee){
-		
 		if(empty($employee->supervisor)){
 			LogManager::getInstance()->info("Employee supervisor is empty");
 			return null;
@@ -20,9 +19,8 @@ class LoansEmailSender{
 		$sup->Load("id = ?",array($employee->supervisor));
 		if($sup->id != $employee->supervisor){
 			LogManager::getInstance()->info("Employee supervisor not found");
-			return null;	
-		}	
-		
+			return null;
+		}
 		return $sup;
 	}
 	
@@ -38,7 +36,7 @@ class LoansEmailSender{
 	}
 	
 	public function sendLoanApplicationEmail($employee, $cancellation = false){
-		
+
 		$sup = $this->getEmployeeSupervisor($employee);
 		if(empty($sup)){
 			return false;
@@ -50,19 +48,19 @@ class LoansEmailSender{
 		$params['url'] = CLIENT_BASE_URL; 
 		
 		if($cancellation){
-			$email = $this->subActionManager->getEmailTemplate('leaveCancelled.html');
+			$email = $this->subActionManager->getEmailTemplate('loanCancelled.html');
 		}else{
-			$email = $this->subActionManager->getEmailTemplate('leaveApplied.html');
+			$email = $this->subActionManager->getEmailTemplate('loanApplied.html');
 		}
 		
 		
 		$user = $this->subActionManager->getUserFromProfileId($sup->id);
-		
+
 		$emailTo = null;
 		if(!empty($user)){
 			$emailTo = $user->email;
 		}
-		
+
 		if(!empty($emailTo)){
 			if(!empty($this->emailSender)){
 				
@@ -105,12 +103,10 @@ class LoansEmailSender{
 	
 	public function sendLoanApplicationSubmittedEmail($employee){
 		
-		
-		$params = array(); 
+		$params = array();
 		$params['name'] = $employee->first_name." ".$employee->last_name; 
 		
-		$email = $this->subActionManager->getEmailTemplate('leaveSubmittedForReview.html');
-		
+		$email = $this->subActionManager->getEmailTemplate('loanSubmittedForReview.html');
 		
 		$user = $this->subActionManager->getUserFromProfileId($employee->id);
 		
@@ -118,13 +114,14 @@ class LoansEmailSender{
 		if(!empty($user)){
 			$emailTo = $user->email;
 		}
-		
+		print_r($this->emailSender);
+		print_r($emailTo);exit;
 		if(!empty($emailTo)){
 			if(!empty($this->emailSender)){
-				$this->emailSender->sendEmail("Leave Application Submitted",$emailTo,$email,$params);
+				$this->emailSender->sendEmail("Loan Application Submitted",$emailTo,$email,$params);
 			}
 		}else{
-			LogManager::getInstance()->info("[sendLeaveApplicationSubmittedEmail] email is empty");
+			LogManager::getInstance()->info("[sendLoanApplicationSubmittedEmail] email is empty");
 		}
 	}
 	
@@ -138,7 +135,7 @@ class LoansEmailSender{
 		$params['enddate'] = $leave->date_end; 
 		$params['status'] = $leave->status; 
 		
-		$email = $this->subActionManager->getEmailTemplate('leaveStatusChanged.html');
+		$email = $this->subActionManager->getEmailTemplate('loanStatusChanged.html');
 		
 		$user = $this->subActionManager->getUserFromProfileId($emp->id);
 		
@@ -149,10 +146,10 @@ class LoansEmailSender{
 		
 		if(!empty($emailTo)){
 			if(!empty($this->emailSender)){
-				$this->emailSender->sendEmail("Leave Application ".$leave->status,$emailTo,$email,$params);
+				$this->emailSender->sendEmail("Loan Application ".$leave->status,$emailTo,$email,$params);
 			}
 		}else{
-			LogManager::getInstance()->info("[sendLeaveStatusChangedEmail] email is empty");
+			LogManager::getInstance()->info("[sendLoanStatusChangedEmail] email is empty");
 		}
 	}
 }

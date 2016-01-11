@@ -43,7 +43,8 @@ class LoansActionManager extends SubActionManager{
 		$employeeLoan->status = "Suspended";
 		$employeeLoan->attachment = isset($req->attachment)?$req->attachment:"";
 		$ok = $employeeLoan->Save();
-
+		$employee = new Employee();
+		$employee->Load('id = ?',array($this->getCurrentProfileId()));
 		if(!$ok){
 			LogManager::getInstance()->info($employeeLoan->ErrorMsg());
 			return new IceResponse(IceResponse::ERROR,"Error occured while applying Loan.");
@@ -52,8 +53,8 @@ class LoansActionManager extends SubActionManager{
 
 		if(!empty($this->emailSender)){
 			$loanssEmailSender = new LoansEmailSender($this->emailSender, $this);
-			$loanssEmailSender->sendLoanApplicationEmail($employeeLoan);
-			$loanssEmailSender->sendLoanApplicationSubmittedEmail($employeeLoan);
+			$loanssEmailSender->sendLoanApplicationEmail($employee);
+			$loanssEmailSender->sendLoanApplicationSubmittedEmail($employee);
 		}
 		$employee= $this->getEmployeeById($employeeLoan->employee);
 		$this->baseService->audit(IceConstants::AUDIT_ACTION, "Loan applied \ start:".$employeeLoan->date_start."\ end:".$employeeLoan->last_installment_date);

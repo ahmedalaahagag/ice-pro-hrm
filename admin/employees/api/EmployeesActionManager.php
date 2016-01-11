@@ -939,10 +939,15 @@ class EmployeesActionManager extends SubActionManager
             $allLangs[] = $langs[0]->name;
         }
         $allLanguages = implode(',', $allLangs);
-        $html .= '<img src="http://ingenuity-studio.com/PCPHRM/img/PCPNewLogo-01.png" width="160px" height="100px" >';
-        $html .= '<h2 style="margin-left: 336px;"><b>' . $jobTitleNames[0]->name . '</b></h2>
-<h2 style="margin-left: 294px;"><b>Code: ' . $jobTitle[0]->code . '</b></p>
-<h4 style="background-color: #365f91;color: white;">Job Organizational Context</h4>
+        $html .= '<style>
+            #color{
+            background-color: #365f91 !important;
+            }
+            </style>
+        <img src="http://ingenuity-studio.com/PCPHRM/img/PCPNewLogo-01.png" width="160px" height="100px" >';
+        $html .= '<h2 style="margin-left: 275px;"><b>' . $jobTitleNames[0]->name . '</b></h2>
+<h2 style="margin-left: 275px;"><b>Code: ' . $jobTitle[0]->code . '</b></p>
+<h4 id="color" style="background-color: #365f91 !important;color: white !important;">Job Organizational Context</h4>
 <table border="1" cellpadding="0" cellspacing="0" style="margin-left: 123px;width: 598px;">
 	<tbody>
 		<tr>
@@ -985,27 +990,28 @@ class EmployeesActionManager extends SubActionManager
 		</tr>
 	</tbody>
 </table>
-<h4 style="background-color: #365f91;color: white;">Job Summary</h4>
+<h4  id="color" style="background-color: #365f91 !important;color: white !important;">Job Summary</h4>
 <p>&sect; ' . $jobTitle[0]->description . '.</p>
-<h4 style="background-color: #365f91;color: white;">Job Duties and Responsibilities</h4>
-<h4  style="background-color: #365f91;color: white;"><b>Strategic Duties</b></h4>
+<h4 id="color" style="background-color: #365f91 !important; color: white !important;">Job Duties and Responsibilities</h4>
+<h4 id="color"  style="background-color: #365f91 !important; color: white !important;"><b>Strategic Duties</b></h4>
 <p>&sect; ' . $stratgic . '</p>
-<h4 style="background-color: #365f91;color: white;"><b>General Administrative Duties</b></h4>
+<h4 id="color" style="background-color: #365f91 !important; color: white !important;"><b>General Administrative Duties</b></h4>
 <p>&sect; ' . $general . '</p>
-<h4 style="background-color: #365f91;color: white;"><b>Technical Duties</b></h4>
+<h4 id="color" style="background-color: #365f91 !important; color: white !important;"><b>Technical Duties</b></h4>
 <p>&sect; ' . $technical . '</p>
 <p><b>For more information on roles and responsibilities, refer to company manual</b>.</p>
-<h4 style="background-color: #365f91;color: white;">Job Specifications</h4>
-<h4 style="background-color: #365f91;color: white;"><b>Minimum Required Education</b></h4>
+<h4 id="color" style="background-color: #365f91 !important; color: white !important;">Job Specifications</h4>
+<h4 id="color" style="background-color: #365f91 !important; color: white !important;"><b>Minimum Required Education</b></h4>
 <p>&sect; ' . $education[0]->name . '</p>
-<h4 style="background-color: #365f91;color: white;"><b>Language Proficiency </b></h4>
+<h4 id="color" style="background-color: #365f91 !important; color: white !important;"><b>Language Proficiency </b></h4>
 <p>&sect; Fluent in ' . $allLanguages . ' language.</p>
-<h4 style="background-color: #365f91;color: white;"><b>Skills and Abilities</b></h4>
+<h4 id="color" style="background-color: #365f91 !important; color: white !important;"><b>Skills and Abilities</b></h4>
 <p>&sect; ' . $allSkills . '</p>
-<h4 style="background-color: #365f91;color: white;"><b>Professional Knowledge</b></h4>
+<h4 id="color" style="background-color: #365f91 !important; color: white !important;"><b>Professional Knowledge</b></h4>
 <p>&sect; Strong software skills include MS PowerPoint, Project &amp; Excel</p>
 <p>&sect; Experience in proposal or grant writing</p>
-<h4 style="background-color: #365f91;color: white;">Job Interactions (Communication)</h4>
+<br><br><br><br>
+<h4 id="color" style="background-color: #365f91 !important;color: white !important;">Job Interactions (Communication)</h4>
 <table border="1" cellpadding="0" cellspacing="0" style="style="width: 723px;height: 128px;">
 	<tbody>
 		<tr>
