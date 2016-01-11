@@ -28,6 +28,11 @@ JobTitleAdapter.method('addNew', function() {
 	modJs.renderForm();
 	window.stop();
 	modJs.getGradeName();
+    this.getGeneralDuites();
+    this.getTechnicalDuites();
+    this.getStrategicDuites();
+    this.getToolTip();
+
 });
 
 JobTitleAdapter.method('editNew', function(id) {
@@ -109,7 +114,7 @@ JobTitleAdapter.method('postRenderForm',function(){
 	this.getTechnicalDuites();
 	this.getStrategicDuites();
 	this.getToolTip();
-	modJs.getGradeName();
+	modJsList['tabJobTitles'].getGradeName();
 });
 JobTitleAdapter.method('getToolTip',function(){
 	$(".select2-search-choice>div").each(function(index, value) {
@@ -200,9 +205,9 @@ GradeBenefitsAdapter.method('addNew', function() {
 });
 
 GradeBenefitsAdapter.method('editNew', function(id) {
-	$("#tabGradeBenefits").trigger("click");
+    $("#tabGradeBenefits").trigger("click");
 	modJs.edit(id);
-
+	window.scrollTo(0 , 0);
 });
 
 GradeBenefitsAdapter.method('postRenderForm',function(){

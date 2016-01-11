@@ -26,6 +26,17 @@ define('MODULE_PATH', dirname(__FILE__));
 include APP_BASE_PATH . 'header.php';
 include APP_BASE_PATH . 'modulejslibs.inc.php';
 ?>
+<style>
+    #JobTitles{
+        display: none !important;
+    }
+    #GradeBenefits{
+        display: none !important;
+    }
+    #GradeBenefitsForm{
+        display: block !important;
+    }
+</style>
 <div class="span9">
     <ul class="nav nav-tabs" id="modTab" style="margin-bottom:0px;margin-left:5px;border-bottom: none;">
         <li id="Grade" class="active"><a id="tabPayGrades" href="#tabPagePayGrades" onclick="location.reload();">Grades</a></li>
@@ -61,7 +72,7 @@ include APP_BASE_PATH . 'modulejslibs.inc.php';
             </div>
         </div>
         <div class="tab-pane" id="tabPageJobTitles">
-            <div id="JobTitles" class="reviewBlock" data-content="List" style="padding-left:5px;">
+            <div id="JobTitles" class="reviewBlock" data-content="List" style="padding-left:5px;display: none;">
 
             </div>
             <div id="JobTitlesForm" class="reviewBlock" data-content="Form" style="padding-left:5px;display:none;">
@@ -69,17 +80,16 @@ include APP_BASE_PATH . 'modulejslibs.inc.php';
             </div>
         </div>
         <div class="tab-pane" id="tabPageGradeBenefits">
-            <div id="GradeBenefits" class="reviewBlock" data-content="List" style="padding-left:5px;">
+            <div id="GradeBenefits" class="reviewBlock" data-content="List" style="padding-left:5px;display: none;">
 
             </div>
-            <div id="GradeBenefitsForm" class="reviewBlock" data-content="Form" style="padding-left:5px;display:none;">
+            <div id="GradeBenefitsForm" class="reviewBlock" data-content="Form" style="padding-left:5px;display:block;">
 
             </div>
         </div>
     </div>
 </div>
 <script>
-
     var modJsList = new Array();
     modJsList['tabPayGrades'] = new PayGradeAdapter('PayGrades');
     modJsList['tabJobTitlesNames'] = new JobTitlesNamesAdapter('JobTitlesNames');

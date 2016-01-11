@@ -439,8 +439,6 @@ class BaseService{
 	
 	public function getElement($table,$id,$mappingStr = null, $skipSecurityCheck = false){
 		$obj = new $table();
-		
-		
 		if(in_array($table, $this->userTables)){
 			$cemp = $this->getCurrentProfileId();
 			if(!empty($cemp)){

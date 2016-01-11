@@ -897,10 +897,12 @@ class EmployeesActionManager extends SubActionManager
         $jobTitle = $jobTitle->Find('id = ?', array($req));
         $jobTitleNames = new JobTitlesNames();
         $jobTitleNames = $jobTitleNames->Find('id = ?', array($jobTitle[0]->name));
+        $reportingTo = new JobTitlesNames();
+        $reportingTo = $reportingTo->Find('id = ?', array($jobTitle[0]->reporting_to));
         $department = new CompanyStructures();
         $department = $department->Find('id = ?', array($jobTitle[0]->department));
-        $education = new Educations();
-        $education = $education->Find('id = ?', array($jobTitle[0]->education));
+        $education =  new Educations();
+        $education = $education->Find('id  = ?',array($jobTitle[0]->education));
         $generalduites = json_decode($jobTitle[0]->general_duties);
         foreach ($generalduites as $generalduty) {
             $duties = new Duties();
@@ -914,7 +916,7 @@ class EmployeesActionManager extends SubActionManager
             $duty = $duties->Find('id = ?', array($stratgicduty));
             $stratgic[] = $duty[0]->name . ':' . $duty[0]->description . ',<br>';
         }
-        $stratgic = implode(',', $general);
+        $stratgic = implode(',', $stratgic);
         $technicalduties = json_decode($jobTitle[0]->technical_duties);
         foreach ($technicalduties as $technicalduty) {
             $duties = new Duties();
@@ -922,7 +924,6 @@ class EmployeesActionManager extends SubActionManager
             $technical[] = $duty[0]->name . ':' . $duty[0]->description . ',<br>';
         }
         $technical = implode(',', $technical);
-
         $skills = json_decode($jobTitle[0]->skills);
         foreach ($skills as $skill) {
             $skill1 = new Skills();
@@ -939,23 +940,23 @@ class EmployeesActionManager extends SubActionManager
         }
         $allLanguages = implode(',', $allLangs);
         $html .= '<img src="http://ingenuity-studio.com/PCPHRM/img/PCPNewLogo-01.png" width="160px" height="100px" >';
-        $html .= '<p><b>' . $jobTitleNames[0]->name . '</b></p>
-<p><b>Code: ' . $jobTitle[0]->code . '</b></p>
-<h2>Job Organizational Context</h2>
-<table border="1" cellpadding="0" cellspacing="0">
+        $html .= '<h2 style="margin-left: 336px;"><b>' . $jobTitleNames[0]->name . '</b></h2>
+<h2 style="margin-left: 294px;"><b>Code: ' . $jobTitle[0]->code . '</b></p>
+<h4 style="background-color: #365f91;color: white;">Job Organizational Context</h4>
+<table border="1" cellpadding="0" cellspacing="0" style="margin-left: 123px;width: 598px;">
 	<tbody>
 		<tr>
 			<td>
 			<p><b>Department</b></p>
 			</td>
 			<td>
-			<p>Business Development</p>
+			<p>'.$department[0]->title.'</p>
 			</td>
 			<td>
 			<p><b>Section</b></p>
 			</td>
 			<td>
-			<p>Business Development</p>
+			<p>'.$department[0]->title.'</p>
 			</td>
 		</tr>
 		<tr>
@@ -963,7 +964,7 @@ class EmployeesActionManager extends SubActionManager
 			<p><b>Reporting to</b></p>
 			</td>
 			<td>
-			<p>Business Development Supervisor</p>
+			<p>'.$reportingTo[0]->name.'</p>
 			</td>
 			<td>
 			<p><b>Job Location</b></p>
@@ -984,28 +985,28 @@ class EmployeesActionManager extends SubActionManager
 		</tr>
 	</tbody>
 </table>
-<h2>Job Summary</h2>
+<h4 style="background-color: #365f91;color: white;">Job Summary</h4>
 <p>&sect; ' . $jobTitle[0]->description . '.</p>
-<h2>Job Duties and Responsibilities</h2>
-<p><b>Strategic Duties</b></p>
+<h4 style="background-color: #365f91;color: white;">Job Duties and Responsibilities</h4>
+<h4  style="background-color: #365f91;color: white;"><b>Strategic Duties</b></h4>
 <p>&sect; ' . $stratgic . '</p>
-<h2><b>General Administrative Duties</b></h2>
+<h4 style="background-color: #365f91;color: white;"><b>General Administrative Duties</b></h4>
 <p>&sect; ' . $general . '</p>
-<h2><b>Technical Duties</b></h2>
+<h4 style="background-color: #365f91;color: white;"><b>Technical Duties</b></h4>
 <p>&sect; ' . $technical . '</p>
 <p><b>For more information on roles and responsibilities, refer to company manual</b>.</p>
-<h2>Job Specifications</h2>
-<h2><b>Minimum Required Education</b></h2>
-<p>&sect; ' . $education . '</p>
-<h2><b>Language Proficiency </b></h2>
+<h4 style="background-color: #365f91;color: white;">Job Specifications</h4>
+<h4 style="background-color: #365f91;color: white;"><b>Minimum Required Education</b></h4>
+<p>&sect; ' . $education[0]->name . '</p>
+<h4 style="background-color: #365f91;color: white;"><b>Language Proficiency </b></h4>
 <p>&sect; Fluent in ' . $allLanguages . ' language.</p>
-<h2><b>Skills and Abilities</b></h2>
+<h4 style="background-color: #365f91;color: white;"><b>Skills and Abilities</b></h4>
 <p>&sect; ' . $allSkills . '</p>
-<h2><b>Professional Knowledge</b></h2>
+<h4 style="background-color: #365f91;color: white;"><b>Professional Knowledge</b></h4>
 <p>&sect; Strong software skills include MS PowerPoint, Project &amp; Excel</p>
 <p>&sect; Experience in proposal or grant writing</p>
-<h2>Job Interactions (Communication)</h2>
-<table border="1" cellpadding="0" cellspacing="0">
+<h4 style="background-color: #365f91;color: white;">Job Interactions (Communication)</h4>
+<table border="1" cellpadding="0" cellspacing="0" style="style="width: 723px;height: 128px;">
 	<tbody>
 		<tr>
 			<td valign="top">
@@ -1026,7 +1027,7 @@ class EmployeesActionManager extends SubActionManager
 	</tbody>
 </table>
 <p>Job Description Acknowledgment</p>
-<table border="1" cellpadding="0" cellspacing="0">
+<table border="1" cellpadding="0" cellspacing="0" style="width: 723px;height: 128px;">
 	<tbody>
 		<tr>
 			<td>

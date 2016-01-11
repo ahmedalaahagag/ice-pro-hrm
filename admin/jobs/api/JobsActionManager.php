@@ -58,7 +58,7 @@ class JobsActionManager extends SubActionManager{
         foreach($gradeBenefits as $gradeBenefit)
         {
             $gradeBenefit = (array)$gradeBenefit;
-            $jobbenefitsSection.='<tr><th>'.$gradeBenefit['item'].'</th><th><div style="width:110px;"><img class="tableActionButton" src="'.BASE_URL.'images/edit.png" style="cursor:pointer;margin-left:15px;" rel="tooltip" title="Edit" onclick="modJsList[\'tabGradeBenefits\'].editNew('.$gradeJobTitle['id'].');return false;"></img><img class="tableActionButton" src="_BASE_images/edit.png" style="display:none;cursor:pointer;margin-left:15px;" rel="tooltip" title="Edit" onclick="modJsList[\'tabGradeBenefits\'].editNew('.$gradeBenefit['id'].');return false;"></img></th></tr>';
+            $jobbenefitsSection.='<tr><th>'.$gradeBenefit['item'].'</th><th><div style="width:110px;"><img class="tableActionButton" src="'.BASE_URL.'images/edit.png" style="cursor:pointer;margin-left:15px;" rel="tooltip" title="Edit" onclick="modJsList[\'tabGradeBenefits\'].editNew('.$gradeBenefit['id'].');return false;"></img><img class="tableActionButton" src="_BASE_images/edit.png" style="display:none;cursor:pointer;margin-left:15px;" rel="tooltip" title="Edit" onclick="modJsList[\'tabGradeBenefits\'].editNew('.$gradeBenefit['id'].');return false;"></img></th></tr>';
         }
         $jobbenefitsSection  .='</tbody>
         </table>

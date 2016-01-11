@@ -3436,3 +3436,6 @@
 [2016-01-10 16:55:36] ICE Hrm.INFO: {"employee":"10"} [] []
 [2016-01-10 18:34:04] ICE Hrm.INFO: Column 'code' cannot be null [] []
 [10-Jan-2016 18:34:18 Europe/Athens] PHP Fatal error:  Class 'Skill' not found in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 667
+[11-Jan-2016 10:39:50 Europe/Athens] PHP Fatal error:  Class 'JobTitle' not found in C:\xamppe\htdocs\ICEPRO\admin\employees\api\EmployeesActionManager.php on line 902
+[11-Jan-2016 10:40:45 Europe/Athens] PHP Fatal error:  Call to a member function Find() on a non-object in C:\xamppe\htdocs\ICEPRO\admin\employees\api\EmployeesActionManager.php on line 903
+[11-Jan-2016 10:41:47 Europe/Athens] PHP Fatal error:  Cannot use object of type JobTitles as array in C:\xamppe\htdocs\ICEPRO\admin\employees\api\EmployeesActionManager.php on line 903
