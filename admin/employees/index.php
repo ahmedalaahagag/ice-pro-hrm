@@ -7,20 +7,18 @@ include APP_BASE_PATH.'modulejslibs.inc.php';
 $fieldNameMap = BaseService::getInstance()->getFieldNameMappings("Employee");
 $customFields = BaseService::getInstance()->getCustomFields("Employee");
 ?>
-
 <div class="span9">
-			  
 	<ul class="nav nav-tabs" id="modTab" style="margin-bottom:0px;margin-left:5px;border-bottom: none;">
         <?php if($user->user_level != "Admin"){
         ?>
-		    <li class="active"><a id="tabEmployee" href="#tabPageEmployee">Employees (Direct Reports)</a></li>
+		 <li class="active"><a id="tabEmployee" href="#tabPageEmployee">Employees (Direct Reports)</a></li>
         <?php }else{ ?>
-            <li class="active"><a id="tabEmployee" href="#tabPageEmployee">Employees</a></li>
+         <li class="active"><a id="tabEmployee" href="#tabPageEmployee">Employees</a></li>
         <?php }?>
 		<li><a id="tabEmployeeDependent" href="#tabPageEmployeeDependent">Dependents</a></li>
 		<li><a id="tabEmergencyContact" href="#tabPageEmergencyContact">Emergency Contacts</a></li>
-
-        <?php if($user->user_level == "Admin"){
+        <?php
+		if($user->user_level == "Admin"){
         ?>
         <li class="dropdown">
             <a href="#" id="terminatedEmployeeMenu" class="dropdown-toggle" data-toggle="dropdown" aria-controls="terminatedEmployeeMenu-contents">Suspended Employees <span class="caret"></span></a>

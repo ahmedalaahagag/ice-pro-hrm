@@ -274,8 +274,12 @@ EmployeeSalaryAdapter.method('getFilters', function() {
 
 function EmployeePayslipAdapter(endPoint,tab,filter,orderBy) {
     this.initAdapter(endPoint,tab,filter,orderBy);
+    $("#print").show();
+    $("#print").hide();
     this.setShowAddNew(false);
     this.addPrintButton();
+    this.reCalculateAllSalary();
+
 }
 
 EmployeePayslipAdapter.inherits(AdapterBase);
@@ -344,6 +348,12 @@ EmployeePayslipAdapter.method('addPrintButton', function(id) {
 $("#EmployeeSalaryPayslip").after('<div id="print" style="display:none;"></div>');
 $("#EmployeeSalaryPayslip").after('<button  class="btn btn-success" onClick="modJs.printSheet()">Print Bank Sheet</button>')
 });
+
+EmployeePayslipAdapter.method('reCalculateAllSalary', function() {
+    $.post(this.moduleRelativeURL, {'a': 'ca', 'req': '' , 'mod': 'admin_employees', 'sa': 'reCalculateAllSalary'}, function (data) {
+    })
+});
+
 EmployeePayslipAdapter.method('printSheet', function(id) {
     $.post(this.moduleRelativeURL, {'a': 'ca', 'req': id , 'mod': 'admin_employees', 'sa': 'getSalariesTable'}, function (data) {
         $("#print").html(data);

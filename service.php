@@ -89,6 +89,7 @@ if($action == 'get'){
 	$ret['status'] = "SUCCESS";	
 	
 }else if($action == 'ca'){
+
 	if(isset($_REQUEST['req'])){
 		$_REQUEST['req'] = BaseService::getInstance()->fixJSON($_REQUEST['req']);
 	}
@@ -97,18 +98,14 @@ if($action == 'get'){
 	$moduleCapsName = ucfirst($modPath[1]);
 	$subAction = $_REQUEST['sa'];
 	$apiFile = APP_BASE_PATH.$modPath[0]."\\".$modPath[1]."\\api\\".$moduleCapsName."ActionManager.php";
-			//LogManager::getInstance()->info("Api File:".$apiFile);
-
-	$emailSenderFile = APP_BASE_PATH.$modPath[0]."/".$modPath[1]."/api/".$moduleCapsName."EmailSender.php";
+	$emailSenderFile = APP_BASE_PATH.$modPath[0]."\\".$modPath[1]."\\api\\".$moduleCapsName."EmailSender.php";
 	if(file_exists($apiFile)){
-		include ($apiFile);
+		include($apiFile);
 		if(file_exists($emailSenderFile)){
-			include ($emailSenderFile);	
+			include ($emailSenderFile);
 		}
 		$cls = $moduleCapsName."ActionManager";
-
 		$apiClass = new $cls();
-
 		$apiClass->setUser($user);
 		$apiClass->setBaseService($baseService);
 		$apiClass->setEmailSender($baseService->getEmailSender());

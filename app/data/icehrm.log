@@ -3478,3 +3478,8 @@
 [2016-01-11 14:46:11] ICE Hrm.INFO: Sending email to: ahmedalaahagag@gmail.com/ from: ICE Hrm <icehrm@mydomain.com> [] []
 [2016-01-11 14:46:54] ICE Hrm.INFO: Sending email to: ahmedalaahagag@gmail.com/ from: ICE Hrm <icehrm@mydomain.com> [] []
 [2016-01-11 14:47:58] ICE Hrm.INFO: Sending email to: ahmedalaahagag@gmail.com/ from: ICE Hrm <icehrm@mydomain.com> [] []
+[2016-01-11 17:07:39] PCP Hrm.INFO: File dosen't exist :C:\xamppe\htdocs\ICEPRO\admin\employees\api\ActionManager.php [] []
+[11-Jan-2016 17:13:13 Europe/Athens] PHP Fatal error:  Class 'EmployeesActionManager' not found in C:\xamppe\htdocs\ICEPRO\service.php on line 108
+[11-Jan-2016 17:17:08 Europe/Athens] PHP Fatal error:  Cannot use object of type Employee as array in C:\xamppe\htdocs\ICEPRO\admin\employees\api\EmployeesActionManager.php on line 180
+[11-Jan-2016 17:17:49 Europe/Athens] PHP Fatal error:  Call to a member function getJsonArray() on a non-object in C:\xamppe\htdocs\ICEPRO\service.php on line 126
+[11-Jan-2016 17:22:10 Europe/Athens] PHP Fatal error:  Class 'Skill' not found in C:\xamppe\htdocs\ICEPRO\classes\BaseService.php on line 664

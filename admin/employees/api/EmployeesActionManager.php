@@ -171,6 +171,37 @@ class EmployeesActionManager extends SubActionManager
         return $total;
     }
 
+    public function reCalculateAllSalary(){
+
+        $allEmployees = new Employee();
+        $allEmployees = $allEmployees->Find('');
+        foreach($allEmployees as $allEmployee)
+        {
+        $id=$allEmployee->id;
+        $employee = new Employee();
+        $employee = $employee->Find("id = ?", array($id));
+        $salary = $employee[0]->salary;
+        $jobTitle = $employee[0]->job_title;
+        $location = $employee[0]->work_location;
+        $payGrade = new JobTitles();
+        $payGrade = $payGrade->Find('id = ?', array($jobTitle));
+        $payGrade = $payGrade[0]->grade;
+        $jobTitleName = $payGrade[0]->name;
+        $leaves = new LeaveType();
+        $leaves = $leaves->Find('location = ?', array($location));
+        $taxes = $this->getTotalTaxes($salary);
+        $advantages = $this->getTotalGradeAdvantages($payGrade);
+        $totalExpences =  $advantages + $taxes  ;
+        $final = ($salary  - $totalExpences);
+        $updatedemployee = new Employee();
+        $updatedemployee->Load('id = ?',array($id));
+        $updatedemployee->gross_salary = $final;
+        $updatedemployee->Save();
+        }
+        print_r(1);
+        exit;
+    }
+
     public function getSalaryCompnents($id)
     {
         $currentUserID = $this->getCurrentProfileId();
@@ -203,10 +234,7 @@ class EmployeesActionManager extends SubActionManager
         $attendaceTotal = $this->getTotalLateCost($id, $salary);
         $loans = $this->getTotalLoans($id);
         $taxes = $this->getTotalTaxes($salary);
-        //$advantages = $this->getTotalGradeAdvantages($payGrade);
-        //$advantages =0;
         $allowances = $this->getTotalGradeAllowances($payGrade);
-        //$allowances = 0;
         $exptionalLoans = $this->getTotalExptionalLoans($id);
         $loansTotal = $loans + $exptionalLoans;
         $totalPalenties = $loansTotal + $allowances + $taxes + $attendaceTotal + $vacations;
@@ -703,6 +731,8 @@ class EmployeesActionManager extends SubActionManager
         return $total;
     }
 
+
+
     public function getSalaryByGrade($req)
     {
         $grade = new PayGrades();
@@ -779,10 +809,14 @@ class EmployeesActionManager extends SubActionManager
                 <thead><tr role="row"><th class="header" tabindex="0" rowspan="1" colspan="1" style="width: 228px;" aria-label="First Name: activate to sort column ascending">First Name</th><th class="header" tabindex="0" rowspan="1" colspan="1" style="width: 225px;" aria-label="Last Name: activate to sort column ascending">Last Name</th><th class="header" tabindex="0" rowspan="1" colspan="1" style="width: 284px;" aria-label="Bank Account: activate to sort column ascending">Bank Account</th><th class="header" tabindex="0" rowspan="1" colspan="1" style="width: 222px;" aria-label="Net Salary: activate to sort column ascending">Net Salary</th><th class="center header" tabindex="0" rowspan="1" colspan="1" style="width: 32px;" aria-label=": activate to sort column ascending"></th></tr></thead>
                 ';
         foreach ($employess as $employee) {
-            $html .= '<tr class="odd"><td class="">' . $employee->first_name . '</td><td class="">' . $employee->last_name . '</td><td class="">' . $employee->bank_account . '</td><td class="">' . $employee->gross_salary . '</td></tr>';
+            $bank = new Banks();
+            $bank = $bank->Find('id = ?',array($employee->bank));
+            $bankBranch = new BanksBranches();
+            $bankBranch = $bankBranch->Find('id = ?',array($employee->bank_branch));
+            $html .= '<tr class="odd"><td class="">' . $employee->id . '</td><td class="">' . $bank[0]->name . '</td><td class="">' . $bankBranch[0]->name . '</td><td class="">' . $employee->first_name . '</td><td class="">' . $employee->last_name . '</td><td class="">' . $employee->bank_account . '</td><td class="">' . $employee->gross_salary . '</td></tr>';
         }
         $html .= '</table>';
-        $html .= '<h4>Total : ' . $employee->total_salaries . '</h4>';
+        $html .= '<h4 class="pull-right">Total : ' . $employee->total_salaries . '</h4>';
         print_r($html);
         exit;
     }
@@ -893,6 +927,7 @@ class EmployeesActionManager extends SubActionManager
 
     public function getJobDescription($req)
     {
+        $html="";
         $jobTitle = new JobTitles();
         $jobTitle = $jobTitle->Find('id = ?', array($req));
         $jobTitleNames = new JobTitlesNames();
