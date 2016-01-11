@@ -91,4 +91,9 @@ EmployeeCompanyLoanAdapter.method('getFilters', function() {
 	        
 	];
 });
-
+EmployeeCompanyLoanAdapter.method('postRenderForm', function() {
+	if(!$("#id").val()){
+		$("select").prepend("<option value=''>Please select an option</option>").val('');
+		$(".select2-offscreen").select2("val", "");
+	}
+});

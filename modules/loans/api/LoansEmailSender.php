@@ -114,8 +114,6 @@ class LoansEmailSender{
 		if(!empty($user)){
 			$emailTo = $user->email;
 		}
-		print_r($this->emailSender);
-		print_r($emailTo);exit;
 		if(!empty($emailTo)){
 			if(!empty($this->emailSender)){
 				$this->emailSender->sendEmail("Loan Application Submitted",$emailTo,$email,$params);

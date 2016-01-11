@@ -44,7 +44,12 @@ DocumentAdapter.method('getHelpLink', function () {
 	return 'http://blog.icehrm.com/?page_id=88';
 });
 
-
+DocumentAdapter.method('postRenderForm', function() {
+		if(!$("#id").val()){
+			$("select").prepend("<option value=''>Please select an option</option>").val('');
+			$(".select2-offscreen").select2("val", "");
+		}
+});
 function EmployeeDocumentAdapter(endPoint) {
 	this.initAdapter(endPoint);
 }
@@ -105,4 +110,11 @@ EmployeeDocumentAdapter.method('getActionButtonsHtml', function(id,data) {
 	html = html.replace(/_attachment_/g,data[6]);
 	html = html.replace(/_BASE_/g,this.baseUrl);
 	return html;
+});
+
+EmployeeDocumentAdapter.method('postRenderForm', function() {
+	if(!$("#id").val()){
+		$("select").prepend("<option value=''>Please select an option</option>").val('');
+		$(".select2-offscreen").select2("val", "");
+	}
 });

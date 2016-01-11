@@ -55,7 +55,7 @@ JobTitleAdapter.method('printJobDescription',function(){
 		$("#Grade").hide();
 		$("#tabEmploymentStatus").hide();
 		$("#printJobDescription").show();
-		$("#printJobDescription").html(data);
+		$("#printJobDescription").append(data);
 		window.print();
 		$("#JobTitles_submit").show();
 		$("#Grade").show();
@@ -115,6 +115,10 @@ JobTitleAdapter.method('postRenderForm',function(){
 	this.getStrategicDuites();
 	this.getToolTip();
 	modJsList['tabJobTitles'].getGradeName();
+	if(!$("#id").val()){
+			$("select").prepend("<option value=''>Please select an option</option>").val('');
+			$(".select2-offscreen").select2("val", "");
+		}
 });
 JobTitleAdapter.method('getToolTip',function(){
 	$(".select2-search-choice>div").each(function(index, value) {
@@ -217,6 +221,10 @@ GradeBenefitsAdapter.method('postRenderForm',function(){
 	$("#depreciation_percentage").after("<span>Per Month</span>");
 	$("#field_depreciation_time").val(0);
 	$("#field_depreciation_percentage").val(0);
+	if(!$("#id").val()){
+		$("select").prepend("<option value=''>Please select an option</option>").val('');
+		$(".select2-offscreen").select2("val", "");
+	}
 	$("#type").on('change', function () {
 		if($("#type").val()=='Allowance'){
 			$("#field_depreciation_time").hide();
@@ -294,6 +302,10 @@ PayGradeAdapter.method("postRenderForm", function(id,data) {
 	$("#Q5").after('<div style="margin-top: -20px;margin-left: 535px;">EGP</div>');
 	$("#Q6").after('<div style="margin-top: -20px;margin-left: 535px;">EGP</div>');
 	$("#max").after('<div style="margin-top: -20px;margin-left: 535px;">EGP</div>');
+	if(!$("#id").val()){
+		$("select").prepend("<option value=''>Please select an option</option>").val('');
+		$(".select2-offscreen").select2("val", "");
+	}
 
 });
 

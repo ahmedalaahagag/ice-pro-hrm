@@ -944,7 +944,7 @@ class EmployeesActionManager extends SubActionManager
             background-color: #365f91 !important;
             }
             </style>
-        <img src="http://ingenuity-studio.com/PCPHRM/img/PCPNewLogo-01.png" width="160px" height="100px" >';
+       ';
         $html .= '<h2 style="margin-left: 275px;"><b>' . $jobTitleNames[0]->name . '</b></h2>
 <h2 style="margin-left: 275px;"><b>Code: ' . $jobTitle[0]->code . '</b></p>
 <h4 id="color" style="background-color: #365f91 !important;color: white !important;">Job Organizational Context</h4>

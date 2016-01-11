@@ -187,6 +187,10 @@ ProjectAdapter.method('getHelpLink', function () {
 });
 
 ProjectAdapter.method('postRenderForm',function(){
+	if(!$("#id").val()){
+		$("select").prepend("<option value=''>Please select an option</option>").val('');
+		$(".select2-offscreen").select2("val", "");
+	}
 	$("#project_category").on('change',modJs.getSubServiceCategory());
 	$("#field_longitude").after('<div id="map"></div><style>#map {width: 500px;height: 400px;background-color: #CCC;margin-left: 286px}</style>');
 	this.initMap();
