@@ -104,6 +104,7 @@ ProjectAdapter.method('getFormFields', function() {
 				[ "client_rep_phone", {"label":"Client Representative Phone","type":"text"}],
 				[ "pm", {"label":"Project Manager","type":"select2","remote-source":["Employees","id","first_name+last_name"]}],
 				[ "tba", {"label":"TBA","type":"text","validation":"number"}],
+
 				[ "department"+department+"", {"label":"Department","type":"select2","remote-source":["CompanyStructures","id","title"]}],
 
 				[ "budget", {"label":"Budget","type":"text","validation":"none"}],
@@ -187,6 +188,9 @@ ProjectAdapter.method('getHelpLink', function () {
 });
 
 ProjectAdapter.method('postRenderForm',function(){
+	$.post(this.moduleRelativeURL,{'a': 'ca', 'req': '' , 'mod': 'admin_jobs', 'sa': 'getNodes' } , function (data) {
+		$("#department1").html(data);
+	});
 	if(!$("#id").val()){
 		$("select").prepend("<option value=''>Please select an option</option>").val('');
 		$(".select2-offscreen").select2("val", "");
@@ -212,6 +216,7 @@ ProjectAdapter.method('postRenderForm',function(){
 				department = parseInt(data);
 			})
 		})
+
 	}
 });
 ProjectAdapter.method('removeDepartment',function (id) {

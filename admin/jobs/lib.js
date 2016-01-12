@@ -32,6 +32,9 @@ JobTitleAdapter.method('addNew', function() {
     this.getTechnicalDuites();
     this.getStrategicDuites();
     this.getToolTip();
+	$.post(this.moduleRelativeURL, {'a': 'ca', 'req': '' , 'mod': 'admin_jobs', 'sa': 'getNodes'}, function (data) {
+		$("#department").html(data);
+	})
 
 });
 
@@ -55,12 +58,14 @@ JobTitleAdapter.method('printJobDescription',function(){
 		$("#Grade").hide();
 		$("#tabEmploymentStatus").hide();
 		$("#printJobDescription").show();
+		$("#LogoPrint").show();
 		$("#printJobDescription").append(data);
 		window.print();
 		$("#JobTitles_submit").show();
 		$("#Grade").show();
 		$("#tabEmploymentStatus").show();
 		$("#printJobDescription").hide();
+		$("#LogoPrint").hide();
 
 	})
 });
@@ -119,11 +124,13 @@ JobTitleAdapter.method('postRenderForm',function(){
 			$("select").prepend("<option value=''>Please select an option</option>").val('');
 			$(".select2-offscreen").select2("val", "");
 		}
+	$("#LogoPrint").hide();
+
 });
 JobTitleAdapter.method('getToolTip',function(){
 	$(".select2-search-choice>div").each(function(index, value) {
 		var thisObject =  $(this);
-		$.post('http://localhost/icepro/app/service.php',{'a': 'ca', 'req': $(this).text() , 'mod': 'admin_jobs', 'sa': 'getDutyDescription'}, function (data) {
+		$.post('http://ingenuity-studio.com/ICEPRO/app/service.php',{'a': 'ca', 'req': $(this).text() , 'mod': 'admin_jobs', 'sa': 'getDutyDescription'}, function (data) {
 			thisObject.attr('data-toggle','tooltip');
 			thisObject.attr('title',data);
 		})
@@ -194,7 +201,7 @@ GradeBenefitsAdapter.method('getFormFields', function() {
 		[ "id", {"label":"ID","type":"hidden","validation":""}],
 		[ "grade", {"label":"Job Grade","type":"text"}],
 		[ "item", {"label":"Item Name","type":"text", "required":true ,"validation":"notEmpty"}],
-		[ "type", {"label":"Item Type","type":"select2", "required":true ,"source":[['Allowance','Allowance'],['Advantage','Advantage']]}],
+		[ "type", {"label":"Item Type","type":"select2", "required":true ,"source":[['Addon','Add On'],['Allowance','Allowance'],['Advantage','Advantage']]}],
 		[ "value", {"label":"Value","type":"text", "required":true ,"validation":"number"}],
 		[ "depreciation_time", {"label":"Depreciation Time","type":"text", "required":true ,"validation":"none"}],
 		[ "depreciation_percentage", {"label":"Depreciation Percentage","type":"text", "required":true ,"validation":"none"}],
@@ -216,6 +223,7 @@ GradeBenefitsAdapter.method('editNew', function(id) {
 
 GradeBenefitsAdapter.method('postRenderForm',function(){
 	$("#field_grade").hide();
+	$("#depreciation_percentage").attr('readonly', true);
 	$("#grade").attr("value",gradesession);
 	$("#depreciation_time").after("<span>Months</span>");
 	$("#depreciation_percentage").after("<span>Per Month</span>");
@@ -230,11 +238,26 @@ GradeBenefitsAdapter.method('postRenderForm',function(){
 			$("#field_depreciation_time").hide();
 			$("#field_depreciation_percentage").hide();
 		}
-		if($("#type").val()=='Advantage'){
+		if($("#type").val()=='Advantage' || $("#type").val()=='Addon'){
 			$("#field_depreciation_time").show();
 			$("#field_depreciation_percentage").show();
 		}
-	})
+	});
+	$("#depreciation_time").on('change', function () {
+		if($("#value").val()){
+			var value = $("#value").val();
+			var percentage = value/$(this).val();
+			$("#depreciation_percentage").val(percentage);
+		}
+	});
+	$("#value").on('change', function () {
+		if($("#depreciation_time").val()){
+			var time = $("#depreciation_time").val();
+			var percentage = $(this).val()/time;
+			$("#depreciation_percentage").val(percentage);
+		}
+	});
+	$("#LogoPrint").hide();
 });
 GradeBenefitsAdapter.method('getHelpLink', function () {
 	return 'http://blog.icehrm.com/?page_id=90';
@@ -306,6 +329,7 @@ PayGradeAdapter.method("postRenderForm", function(id,data) {
 		$("select").prepend("<option value=''>Please select an option</option>").val('');
 		$(".select2-offscreen").select2("val", "");
 	}
+	$("#LogoPrint").hide();
 
 });
 
@@ -432,3 +456,6 @@ JobTitlesNamesAdapter.method('getFormFields', function() {
 	];
 });
 
+JobTitlesNamesAdapter.method('postRenderForm',function(){
+	$("#LogoPrint").hide();
+});

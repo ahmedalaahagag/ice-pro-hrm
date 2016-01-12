@@ -171,32 +171,50 @@ class EmployeesActionManager extends SubActionManager
         return $total;
     }
 
-    public function reCalculateAllSalary(){
+    public function reCalculateAllSalary()
+    {
 
         $allEmployees = new Employee();
         $allEmployees = $allEmployees->Find('');
-        foreach($allEmployees as $allEmployee)
-        {
-        $id=$allEmployee->id;
-        $employee = new Employee();
-        $employee = $employee->Find("id = ?", array($id));
-        $salary = $employee[0]->salary;
-        $jobTitle = $employee[0]->job_title;
-        $location = $employee[0]->work_location;
-        $payGrade = new JobTitles();
-        $payGrade = $payGrade->Find('id = ?', array($jobTitle));
-        $payGrade = $payGrade[0]->grade;
-        $jobTitleName = $payGrade[0]->name;
-        $leaves = new LeaveType();
-        $leaves = $leaves->Find('location = ?', array($location));
-        $taxes = $this->getTotalTaxes($salary);
-        $advantages = $this->getTotalGradeAdvantages($payGrade);
-        $totalExpences =  $advantages + $taxes  ;
-        $final = ($salary  - $totalExpences);
-        $updatedemployee = new Employee();
-        $updatedemployee->Load('id = ?',array($id));
-        $updatedemployee->gross_salary = $final;
-        $updatedemployee->Save();
+        foreach ($allEmployees as $allEmployee) {
+            $id = $allEmployee->id;
+
+            $user = new User();
+            $user = $user->Find('employee = ?', array($id));
+            $readOnly = '';
+            $readOnlyButton = '';
+            if ($user[0]->username == 'HRManager') {
+                $readOnly = 'readonly';
+                $readOnlyButton = 'display:none;';
+            }
+            $employee = new Employee();
+            $employee = $employee->Find("id = ?", array($id));
+            $salary = $employee[0]->salary;
+            $jobTitle = $employee[0]->job_title;
+            $location = $employee[0]->work_location;
+            $payGrade = new JobTitles();
+            $payGrade = $payGrade->Find('id = ?', array($jobTitle));
+            $payGrade = $payGrade[0]->grade;
+            $leaves = new LeaveType();
+            $leaves = $leaves->Find('location = ?', array($location));
+            $vacations = $this->getTotalVacation($id, $salary);
+            if (!$vacations) {
+                $vacations = 0;
+            }
+            $attendaceTotal = $this->getTotalLateCost($id, $salary);
+            $loans = $this->getTotalLoans($id);
+            $taxes = $this->getTotalTaxes($salary);
+            $allowances = $this->getTotalGradeAllowances($payGrade);
+            $exptionalLoans = $this->getTotalExptionalLoans($id);
+            $loansTotal = $loans + $exptionalLoans;
+            $totalPalenties = $loansTotal + $allowances + $taxes + $attendaceTotal + $vacations;
+            $overTimeTotal = $this->getTotalOverTimeCost($id, $salary);
+            $totalCompunctions = $overTimeTotal;
+            $final = ($salary + $totalCompunctions) - $totalPalenties;
+            $updatedemployee = new Employee();
+            $updatedemployee->Load('id = ?', array($id));
+            $updatedemployee->gross_salary = $final;
+            $updatedemployee->Save();
         }
         print_r(1);
         exit;
@@ -328,37 +346,6 @@ class EmployeesActionManager extends SubActionManager
                             });
                         </script>
                      </div>
-                     <div class="form-group form-inline">
-                      <input type="text" id="Mobile" class="form-control palenties" ' . $readOnly . ' style="width:60px" value="0">
-                       <span class="">Mobile Plan</span>
-                       <button class="btn btn-danger palenties Mobile"  style="margin-left: 50px;' . $readOnlyButton . '">Remove</button>
-                       <script>
-                        $(".Mobile").on("click",function(){
-                          $("#Mobile").val(0);
-                            recalculateSalary();
-                        });
-                         $("#Mobile").on("change",function(){
-                            recalculateSalary();
-                            $("#MobilePlan").text($(this).val());
-                            });
-                        </script>
-                     </div>
-                     <div class="form-group form-inline">
-                      <input type="text" id="Internet" class="form-control palenties" ' . $readOnly . ' style="width:60px" value="0">
-                       <span class="">Internet Plan</span>
-                       <button class="btn btn-danger palenties Internet"  style="margin-left: 42px;' . $readOnlyButton . '">Remove</button>
-                       <script>
-                        $(".Internet").on("click",function(){
-                          $("#Internet").val(0);
-                            recalculateSalary();
-
-                        });
-                         $("#Internet").on("change",function(){
-                            recalculateSalary();
-                            $("#InternetPlan").text($(this).val());
-                            });
-                        </script>
-                     </div>
                   <div class="form-group form-inline">
                       <input type="text" id="Others" class="form-control" ' . $readOnly . ' style="width:60px" value="0">
                        <span class="Others">Others </span>
@@ -434,14 +421,6 @@ class EmployeesActionManager extends SubActionManager
                     var vacations = parseInt($("#Vacations").val(), 10);
                 else
                     var vacations =0;
-                 if($("#Mobile").length)
-                    var mobile = parseInt($("#Mobile").val(), 10);
-                else
-                    var mobile =0;
-                 if($("#Internet").length)
-                    var internet = parseInt($("#Internet").val(), 10);
-                else
-                    var internet =0;
 
                  if($("#Others").length)
                     var others = parseInt($("#Others").val(), 10);
@@ -467,7 +446,7 @@ class EmployeesActionManager extends SubActionManager
                 else
                     var allowances =0;
                 var totalcomp = overtime + allowances + othersplus;
-                var totalpalen = lateniss + advantages + internet + mobile + loans + insurance + vacations + others;
+                var totalpalen = lateniss + advantages  + loans + insurance + vacations + others;
                 var final =(salary+totalcomp)-totalpalen;
                 $("#totalsalary").text(final);
                 $("#totalcompensations").text(totalcomp);
@@ -481,11 +460,6 @@ class EmployeesActionManager extends SubActionManager
                   $("#LatniessPay").text(lateniess);
                   var vacations = parseInt($("#Vacations").val(), 10);
                   $("#UnplannedVactionsPay").text(vacations);
-                  var mobile = parseInt($("#Mobile").val(), 10);
-                   $("#MobilePlan").text(mobile);
-                  var internet = parseInt($("#Internet").val(), 10);
-                   $("#InternetPlan").text(internet);
-                   var others = parseInt($("#Others").val(), 10);
                    $("#OthersPay").text(others);
                    var overtime = parseInt($("#Overtime").val(), 10);
                    $("#OverTimePay").text(overtime);
@@ -572,13 +546,13 @@ class EmployeesActionManager extends SubActionManager
                     <td class="tg-uqo3" colspan="2">Deductions</td>
                   </tr>
                   <tr>
-                    <td class="tg-oskr">Telephone :</td>
+                    <td class="tg-oskr"></td>
                     <td class="tg-oskr" id="MobilePlan"></td>
                     <td class="tg-oskr">Social insurance:</td>
                     <td class="tg-oskr">270</td>
                   </tr>
                   <tr>
-                    <td class="tg-3we0">USB:</td>
+                    <td class="tg-3we0"></td>
                     <td class="tg-3we0" id="InternetPlan"></td>
                     <td class="tg-3we0">Taxes:</td>
                     <td class="tg-3we0">200</td>
@@ -731,8 +705,6 @@ class EmployeesActionManager extends SubActionManager
         return $total;
     }
 
-
-
     public function getSalaryByGrade($req)
     {
         $grade = new PayGrades();
@@ -810,10 +782,10 @@ class EmployeesActionManager extends SubActionManager
                 ';
         foreach ($employess as $employee) {
             $bank = new Banks();
-            $bank = $bank->Find('id = ?',array($employee->bank));
+            $bank = $bank->Find('id = ?', array($employee->bank));
             $bankBranch = new BanksBranches();
-            $bankBranch = $bankBranch->Find('id = ?',array($employee->bank_branch));
-            $html .= '<tr class="odd"><td class="">' . $employee->id . '</td><td class="">' . $bank[0]->name . '</td><td class="">' . $bankBranch[0]->name . '</td><td class="">' . $employee->first_name . '</td><td class="">' . $employee->last_name . '</td><td class="">' . $employee->bank_account . '</td><td class="">' . $employee->gross_salary . '</td></tr>';
+            $bankBranch = $bankBranch->Find('id = ?', array($employee->bank_branch));
+            $html .= '<tr class="odd"><td class="">' . $employee->id . '</td><td class="">' . $bank[0]->name . '</td><td class="">' . $bankBranch[0]->name . '</td><td class="">' . $employee->first_name . $employee->last_name . '</td><td class="">' . $employee->bank_account . '</td><td class="">' . $employee->gross_salary . '</td></tr>';
         }
         $html .= '</table>';
         $html .= '<h4 class="pull-right">Total : ' . $employee->total_salaries . '</h4>';
@@ -927,7 +899,7 @@ class EmployeesActionManager extends SubActionManager
 
     public function getJobDescription($req)
     {
-        $html="";
+        $html = "";
         $jobTitle = new JobTitles();
         $jobTitle = $jobTitle->Find('id = ?', array($req));
         $jobTitleNames = new JobTitlesNames();
@@ -936,8 +908,8 @@ class EmployeesActionManager extends SubActionManager
         $reportingTo = $reportingTo->Find('id = ?', array($jobTitle[0]->reporting_to));
         $department = new CompanyStructures();
         $department = $department->Find('id = ?', array($jobTitle[0]->department));
-        $education =  new Educations();
-        $education = $education->Find('id  = ?',array($jobTitle[0]->education));
+        $education = new Educations();
+        $education = $education->Find('id  = ?', array($jobTitle[0]->education));
         $generalduites = json_decode($jobTitle[0]->general_duties);
         foreach ($generalduites as $generalduty) {
             $duties = new Duties();
@@ -983,20 +955,20 @@ class EmployeesActionManager extends SubActionManager
         $html .= '<h2 style="margin-left: 275px;"><b>' . $jobTitleNames[0]->name . '</b></h2>
 <h2 style="margin-left: 275px;"><b>Code: ' . $jobTitle[0]->code . '</b></p>
 <h4 id="color" style="background-color: #365f91 !important;color: white !important;">Job Organizational Context</h4>
-<table border="1" cellpadding="0" cellspacing="0" style="margin-left: 123px;width: 598px;">
+<table border="1" cellpadding="0" cellspacing="0" style="margin-left: 123px;width: 75%;">
 	<tbody>
 		<tr>
 			<td>
 			<p><b>Department</b></p>
 			</td>
 			<td>
-			<p>'.$department[0]->title.'</p>
+			<p>' . $department[0]->title . '</p>
 			</td>
 			<td>
 			<p><b>Section</b></p>
 			</td>
 			<td>
-			<p>'.$department[0]->title.'</p>
+			<p>' . $department[0]->title . '</p>
 			</td>
 		</tr>
 		<tr>
@@ -1004,7 +976,7 @@ class EmployeesActionManager extends SubActionManager
 			<p><b>Reporting to</b></p>
 			</td>
 			<td>
-			<p>'.$reportingTo[0]->name.'</p>
+			<p>' . $reportingTo[0]->name . '</p>
 			</td>
 			<td>
 			<p><b>Job Location</b></p>
@@ -1047,7 +1019,7 @@ class EmployeesActionManager extends SubActionManager
 <p>&sect; Experience in proposal or grant writing</p>
 <br><br><br><br>
 <h4 id="color" style="background-color: #365f91 !important;color: white !important;">Job Interactions (Communication)</h4>
-<table border="1" cellpadding="0" cellspacing="0" style="style="width: 723px;height: 128px;">
+<table border="1" cellpadding="0" cellspacing="0" style="style="width: 75%;height: 128px;">
 	<tbody>
 		<tr>
 			<td valign="top">
@@ -1068,7 +1040,7 @@ class EmployeesActionManager extends SubActionManager
 	</tbody>
 </table>
 <p>Job Description Acknowledgment</p>
-<table border="1" cellpadding="0" cellspacing="0" style="width: 723px;height: 128px;">
+<table border="1" cellpadding="0" cellspacing="0" style="width: 75%;height: 128px;">
 	<tbody>
 		<tr>
 			<td>
@@ -1115,7 +1087,6 @@ class EmployeesActionManager extends SubActionManager
 	</tbody>
 </table>
 ';
-
         print_r($html);
         exit;
     }

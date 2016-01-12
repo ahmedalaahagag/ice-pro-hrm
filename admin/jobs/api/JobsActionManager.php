@@ -107,4 +107,12 @@ class JobsActionManager extends SubActionManager{
         print_r($duites[0]->description);
         exit;
     }
+    public function getNodes(){
+        $nodes = new CompanyStructures();
+        $nodes = $nodes->Find('node_type = ?',array('Node'));
+        foreach($nodes as $node){
+            $html .= '<option value="'.$node->id.'">'.$node->title.'</option>';
+        }
+        print_r($html);exit;
+    }
 }

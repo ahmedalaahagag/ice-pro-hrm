@@ -203,7 +203,6 @@ EmployeeAdapter.method('getFormFields', function() {
 	        [ "salary", {"label":"Salary","type":"text"}],
 	        [ "gross_salary", {"label":"Salary","type":"text"}],
 	        [ "total_salaries", {"label":"Total","type":"text"}],
-	        [ "work_station_id", {"label":"Work Station Id","type":"text","validation":"none"}],
 	        [ "joined_date", {"label":"Joined Date","type":"date","validation":""}],
 	        [ "department", {"label":"Department","type":"select2","remote-source":["CompanyStructure","id","title"]}],
 	        [ "supervisor", {"label":"Supervisor","type":"select2","allow-null":true,"remote-source":["Employee","id","first_name+last_name"]}],
@@ -273,6 +272,7 @@ EmployeeAdapter.method('getHelpLink', function () {
 EmployeeAdapter.method('postRenderForm', function(callBackData) {
     $("#field_salary").hide();
     $("#field_gross_salary").hide();
+    $("#field_total_salaries").hide();
     $("#field_bank_branch").hide();
     if(!$("#id").val()){
         $("select").prepend("<option value=''>Please select an option</option>").val('');

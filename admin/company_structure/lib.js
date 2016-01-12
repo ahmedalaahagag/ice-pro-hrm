@@ -53,10 +53,7 @@ CompanyStructureAdapter.method('postRenderForm', function() {
 		$("#field_country").hide();
 		$("#country").select2("val", "EG");
 		$("#type").select2("val", "Unit");
-		if(!$("#id").val()){
-			$("select").prepend("<option value=''>Please select an option</option>").val('');
-			$(".select2-offscreen").select2("val", "");
-		}
+
 	}
 });
 /*

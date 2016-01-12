@@ -13,7 +13,7 @@ define('VERSION', '13.3.PRO');
 define('CACHE_VALUE', '13.3.PRO');
 define('VERSION_DATE', '11/11/2015');
 
-if(!defined('CONTACT_EMAIL')){define('CONTACT_EMAIL','info@pcp-eg.com');}
+if(!defined('CONTACT_EMAIL')){define('CONTACT_EMAIL','hr@pcp-eg.com');}
 if(!defined('KEY_PREFIX')){define('KEY_PREFIX','IceHrm');}
 if(!defined('APP_SEC')){define('APP_SEC','dbcs234d2saaqw');}
 

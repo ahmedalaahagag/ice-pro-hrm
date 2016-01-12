@@ -6,10 +6,10 @@ class ProjectsActionManager extends SubActionManager
     {
 
         if ($_REQUEST['req'] == 'Commercial') {
-            $html = '<option value="OfficesBuilding">Offices & Building</option><option value="Banking">Banking</option><option value="Retail">Retail / F&B</option><option value="Industrial">Industrial / Urban</option>';
+            $html = '<option value="OfficesBuilding">Offices & Building</option><option value="Banking">Banking</option><option value="Retail">Retail / F&B</option><option value="Industrial">Industrial / Urban</option><option value="Palaces">Palaces</option>';
         }
         if ($_REQUEST['req'] == 'Residential') {
-            $html = '<option value="Apartments">Apartments</option><option value="Duplexes">Duplexes</option><option value="Villas">Villas</option><option value="Palaces"Palaces</option>';
+            $html = '<option value="Apartments">Apartments</option><option value="Duplexes">Duplexes</option><option value="Villas">Villas</option><option value="RealStates"RealStates</option>';
         }
         print_r($html);
         exit;
@@ -73,8 +73,9 @@ class ProjectsActionManager extends SubActionManager
     {
         $departmentnumber = $_REQUEST['req'];
         $departments = new CompanyStructure();
-        $departments = $departments->Find('');
-        $html .= '<div id="field_department' . $departmentnumber . '" class="row">';
+        $departments = $departments->Find('node_type = ?',array('Node'));
+        $html .= '<h4> Team '.$departmentnumber.'</h4>
+        <div id="field_department' . $departmentnumber . '" class="row">';
         $html .= '<label class="control-label col-sm-3" for="department' . $departmentnumber . '">Department<font class="redFont">*</font></label>';
         $html .= '<div class="controls col-sm-6">';
         $html .= '<select name="department' . $departmentnumber . '" id="department' . $departmentnumber . '" type="select-one" class="form-control select2Field">';
