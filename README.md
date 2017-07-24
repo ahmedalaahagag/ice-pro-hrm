@@ -1,10 +1,10 @@
 # ICEHRM
 A Javascript , PHP application form HR Managers
-<br\>
+<br>
 Based on https://icehrm.com/
-<br\>
+<br>
 Adding Modules of:
-<br\>
+<br>
 - Payroll
 - Pay Grade Grid
 - Company Structure Graph
